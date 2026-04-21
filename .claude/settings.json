@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /Users/jjpardo/Documents/pardo-portfolio/public/assets/tech)",
+      "Bash(curl -sSL -o react.png \"https://www.figma.com/api/mcp/asset/a1348baa-3279-469a-9ebd-7f026236eb88\")",
+      "Bash(curl -sSL -o tailwind.png \"https://www.figma.com/api/mcp/asset/8d8719ad-c661-4817-943a-46e9775e7228\")",
+      "Bash(curl -sSL -o typescript.png \"https://www.figma.com/api/mcp/asset/8b177958-4c55-4456-9ef1-8a3a8d1a8e1a\")",
+      "Bash(curl -sSL -o postgresql.png \"https://www.figma.com/api/mcp/asset/1718f430-db6d-4ff7-a3ff-942c25a52710\")",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(file *.png)",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /dev/null -w \"react.svg: %{http_code} ctype=%{content_type}\\\\n\" http://localhost:3000/assets/tech/react.svg)",
+      "Bash(curl -s -o /dev/null -w \"django.svg: %{http_code} ctype=%{content_type}\\\\n\" http://localhost:3000/assets/tech/django.svg)",
+      "Bash(curl -s -o /dev/null -w \"page: %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s \"http://localhost:3000/\")",
+      "Bash(grep -oE \"anim-[a-z-]+[^\\\\\"]{0,100}\")",
+      "Bash(mkdir -p /Users/jjpardo/Documents/pardo-portfolio/public/assets/projects)",
+      "Bash(curl -sSL -o tedx.png \"https://www.figma.com/api/mcp/asset/28770d03-97fe-4a5a-ab45-e8d4fc49d381\")",
+      "Bash(curl -sSL -o s1napse.png \"https://www.figma.com/api/mcp/asset/53a1d502-1647-4c54-be83-43b6630603a1\")",
+      "Bash(curl -sSL -o s1napse-alt.png \"https://www.figma.com/api/mcp/asset/fe7742c3-2f17-47bf-b1fa-6ac824f4f35d\")",
+      "Bash(curl -sSL -o sigla.png \"https://www.figma.com/api/mcp/asset/0f86505d-c31f-4e66-9c0f-d39727dd8406\")",
+      "Bash(curl -s -o /dev/null -w \"projects: HTTP %{http_code}\\\\n\" http://localhost:3000/projects)",
+      "Bash(curl -s -o /dev/null -w \"home: HTTP %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/cafe.png \"https://www.figma.com/api/mcp/asset/6ff9d7b8-e596-42f7-8e03-c374f013e0c6\")",
+      "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/group.png \"https://www.figma.com/api/mcp/asset/47b54a63-ae07-4fbc-9f47-0783dc05e0bf\")",
+      "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/trio.png \"https://www.figma.com/api/mcp/asset/a29ee3ad-d771-4809-9719-af76ac9e6184\")",
+      "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/race.png \"https://www.figma.com/api/mcp/asset/447d3d47-3080-49b3-b688-36abd9ba1d0c\")",
+      "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/electronics.png \"https://www.figma.com/api/mcp/asset/3033c6ef-a4d8-4207-a4f5-6c07c7a1e074\")"
+    ]
+  }
+}

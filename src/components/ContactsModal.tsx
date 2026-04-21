@@ -1,0 +1,181 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { WindowFrame } from "./WindowFrame";
+
+type ContactsModalProps = {
+  open: boolean;
+  onClose: () => void;
+  zIndex?: number;
+  onFocus?: () => void;
+};
+
+export function ContactsModal({
+  open,
+  onClose,
+  zIndex = 40,
+  onFocus,
+}: ContactsModalProps) {
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+  const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
+  const windowRef = useRef<HTMLDivElement>(null);
+
+  // Center on open
+  useEffect(() => {
+    if (open && pos === null && windowRef.current) {
+      const rect = windowRef.current.getBoundingClientRect();
+      setPos({
+        x: window.innerWidth / 2 - rect.width / 2,
+        y: window.innerHeight / 2 - rect.height / 2,
+      });
+    }
+  }, [open, pos]);
+
+  // Reset position when closed so it recenters next time
+  useEffect(() => {
+    if (!open) setPos(null);
+  }, [open]);
+
+  const onTitleMouseDown = (e: React.MouseEvent) => {
+    if (!pos) return;
+    dragRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      origX: pos.x,
+      origY: pos.y,
+    };
+    const onMove = (ev: MouseEvent) => {
+      if (!dragRef.current || !windowRef.current) return;
+      const rect = windowRef.current.getBoundingClientRect();
+      const nextX =
+        dragRef.current.origX + (ev.clientX - dragRef.current.startX);
+      const nextY =
+        dragRef.current.origY + (ev.clientY - dragRef.current.startY);
+      const halfW = rect.width / 2;
+      const halfH = rect.height / 2;
+      setPos({
+        x: Math.min(Math.max(nextX, -halfW), window.innerWidth - halfW),
+        y: Math.min(Math.max(nextY, -halfH), window.innerHeight - halfH),
+      });
+    };
+    const onUp = () => {
+      dragRef.current = null;
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+  };
+
+  if (!open) return null;
+
+  return (
+    <div
+      ref={windowRef}
+      onMouseDownCapture={onFocus}
+      className="fixed w-[min(675px,92vw)]"
+      style={{
+        left: pos?.x ?? 0,
+        top: pos?.y ?? 0,
+        zIndex,
+        visibility: pos ? "visible" : "hidden",
+      }}
+    >
+      <div onMouseDown={onTitleMouseDown} className="cursor-move">
+        <WindowFrame
+          title="CONTACTS"
+          titleBarColor="#26903d"
+          bodyColor="#f2feff"
+          statusText="3 object(s)"
+          onClose={onClose}
+          className="max-h-[85vh] sm:h-[320px]"
+        >
+          <div
+            className="cursor-default h-full overflow-y-auto break-words"
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            {/* Header row: CONTACTS + connect link */}
+            <div className="flex items-end justify-between flex-wrap gap-2">
+              <p className="text-[#26903d] text-[28px] sm:text-[40px] tracking-[0.8px] leading-none">
+                CONTACTS
+              </p>
+              <a
+                href="#"
+                className="text-[#26903d] text-[14px] sm:text-[16px] tracking-[0.32px] underline leading-[18px] sm:leading-[20px]"
+              >
+                connect with me :)
+              </a>
+            </div>
+
+            {/* Dotted divider */}
+            <div
+              className="mt-2 sm:mt-3 h-[2px] w-full"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(to right, #26903d 0 8px, transparent 8px 14px)",
+              }}
+            />
+
+            {/* Info */}
+            <div className="mt-4 sm:mt-6 text-[14px] sm:text-[20px] tracking-[0.4px] leading-[20px] sm:leading-[28px]">
+              <p className="break-all">
+                <span className="font-bold">email: </span>
+                <a
+                  href="mailto:pardojeromeimportant@gmail.com"
+                  className="hover:underline"
+                >
+                  pardojeromeimportant@gmail.com
+                </a>
+              </p>
+              <p>
+                <span className="font-bold">phone no: </span>
+                <span>+639695666410</span>
+              </p>
+            </div>
+
+            {/* Socials */}
+            <div className="mt-3 sm:mt-5">
+              <p className="font-bold text-[14px] sm:text-[20px] tracking-[0.4px]">socials:</p>
+              <div className="mt-2 flex gap-3 sm:gap-4 items-center">
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block size-[32px] hover:opacity-80"
+                >
+                  <img
+                    src="/assets/linkedin-pixel.svg"
+                    alt="LinkedIn"
+                    className="w-full h-full object-contain [image-rendering:pixelated]"
+                  />
+                </a>
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block size-[32px] hover:opacity-80"
+                >
+                  <img
+                    src="/assets/github-pixel.svg"
+                    alt="GitHub"
+                    className="w-full h-full object-contain [image-rendering:pixelated]"
+                  />
+                </a>
+                <a
+                  href="mailto:pardojeromeimportant@gmail.com"
+                  className="block size-[32px] hover:opacity-80"
+                >
+                  <img
+                    src="/assets/email-pixel.svg"
+                    alt="Email"
+                    className="w-full h-full object-contain [image-rendering:pixelated]"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </WindowFrame>
+      </div>
+    </div>
+  );
+}

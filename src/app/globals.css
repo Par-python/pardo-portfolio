@@ -43,3 +43,117 @@ body {
     inset -2px -2px 0 0 #c1c1c1,
     inset 2px 2px 0 0 #000;
 }
+
+/* Pixel/8-bit entrance animations (stepped for blocky feel) */
+@keyframes pixel-in-left {
+  0% { opacity: 0; transform: translateX(-48px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pixel-in-right {
+  0% { opacity: 0; transform: translateX(48px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pixel-in-up {
+  0% { opacity: 0; transform: translateY(32px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pixel-in-down {
+  0% { opacity: 0; transform: translateY(-32px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pixel-pop {
+  0% { opacity: 0; transform: scale(0); }
+  60% { opacity: 1; transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@keyframes nyan-slide {
+  0% { transform: translateX(120%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes rainbow-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes blink {
+  0%, 90%, 100% { opacity: 1; }
+  95% { opacity: 0; }
+}
+
+/* Stepped easing = 8-bit feel (no smooth curve) */
+.anim-navbar {
+  animation: pixel-in-down 0.5s steps(8, end) both;
+}
+
+.anim-links {
+  animation: pixel-in-left 0.7s steps(10, end) 0.2s both;
+}
+
+.anim-picture {
+  animation: pixel-in-right 0.7s steps(10, end) 0.3s both;
+}
+
+.anim-hi-im {
+  animation: pixel-in-up 0.5s steps(6, end) 0.6s both;
+}
+
+.anim-jj-pardo {
+  animation: pixel-in-up 0.7s steps(10, end) 0.8s both;
+}
+
+.anim-description {
+  animation: pixel-in-up 0.5s steps(6, end) 1.1s both;
+}
+
+.anim-socials > * {
+  animation: pixel-pop 0.3s steps(5, end) both;
+}
+.anim-socials > *:nth-child(1) { animation-delay: 0.9s; }
+.anim-socials > *:nth-child(2) { animation-delay: 1.0s; }
+.anim-socials > *:nth-child(3) { animation-delay: 1.1s; }
+
+.anim-nyan {
+  animation: nyan-slide 1s steps(20, end) 1.5s both, rainbow-bob 0.5s steps(4, end) 2.5s infinite;
+}
+
+.anim-cursor-blink {
+  animation: blink 1s steps(2, end) infinite;
+}
+
+@keyframes boot-fill {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.boot-bar {
+  animation: boot-fill 2s steps(20, end) forwards;
+}
+
+/* Projects page animations */
+.anim-proj-heading {
+  animation: pixel-in-left 0.6s steps(8, end) 0.2s both;
+}
+
+.anim-proj-intro {
+  animation: pixel-in-up 0.5s steps(6, end) 0.5s both;
+}
+
+.anim-proj-grid > * {
+  animation: pixel-pop 0.4s steps(6, end) both;
+}
+.anim-proj-grid > *:nth-child(1) { animation-delay: 0.7s; }
+.anim-proj-grid > *:nth-child(2) { animation-delay: 0.85s; }
+.anim-proj-grid > *:nth-child(3) { animation-delay: 1.0s; }
+.anim-proj-grid > *:nth-child(4) { animation-delay: 1.15s; }
+.anim-proj-grid > *:nth-child(5) { animation-delay: 1.3s; }
+.anim-proj-grid > *:nth-child(6) { animation-delay: 1.45s; }
+
+.anim-proj-footer {
+  animation: pixel-in-up 0.6s steps(8, end) 1.6s both;
+}

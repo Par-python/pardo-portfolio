@@ -5,6 +5,9 @@ type WindowFrameProps = {
   className?: string;
   children?: ReactNode;
   statusText?: string;
+  titleBarColor?: string;
+  bodyColor?: string;
+  onClose?: () => void;
 };
 
 export function WindowFrame({
@@ -12,13 +15,19 @@ export function WindowFrame({
   className = "",
   children,
   statusText,
+  titleBarColor = "#000080",
+  bodyColor = "#ffffff",
+  onClose,
 }: WindowFrameProps) {
   return (
     <div
       className={`relative flex flex-col bg-[#c0c0c0] win-frame-outside p-[4px] gap-[4px] ${className}`}
     >
-      <Titlebar title={title} />
-      <div className="relative flex-1 min-h-0 bg-white win-frame-inside overflow-hidden p-[16px]">
+      <Titlebar title={title} color={titleBarColor} onClose={onClose} />
+      <div
+        className="relative flex-1 min-h-0 win-frame-inside overflow-hidden p-[16px]"
+        style={{ backgroundColor: bodyColor }}
+      >
         {children}
       </div>
       {statusText !== undefined && <Statusbar text={statusText} />}
@@ -26,9 +35,20 @@ export function WindowFrame({
   );
 }
 
-function Titlebar({ title }: { title: string }) {
+function Titlebar({
+  title,
+  color,
+  onClose,
+}: {
+  title: string;
+  color: string;
+  onClose?: () => void;
+}) {
   return (
-    <div className="bg-[#000080] flex items-center justify-between pl-[4px] pr-[2px] py-[2px] w-full">
+    <div
+      className="flex items-center justify-between pl-[4px] pr-[2px] py-[2px] w-full"
+      style={{ backgroundColor: color }}
+    >
       <div className="flex items-center gap-[4px] h-[16px]">
         <img src="/assets/folder.png" alt="" className="size-[16px]" />
         <span className="text-white text-[20px] leading-[13px] tracking-[0.4px] whitespace-nowrap">
@@ -38,33 +58,39 @@ function Titlebar({ title }: { title: string }) {
       <div className="flex items-center gap-[2px]">
         <WindowButton icon="minimize" />
         <WindowButton icon="maximize" />
-        <WindowButton icon="close" />
+        <WindowButton icon="close" onClick={onClose} />
       </div>
     </div>
   );
 }
 
-function WindowButton({ icon }: { icon: "minimize" | "maximize" | "close" }) {
+function WindowButton({
+  icon,
+  onClick,
+}: {
+  icon: "minimize" | "maximize" | "close";
+  onClick?: () => void;
+}) {
+  const Tag = onClick ? "button" : "div";
   return (
-    <div className="relative size-[16px] bg-[#c0c0c0] win-frame-outside flex items-end justify-center p-[4px]">
+    <Tag
+      type={onClick ? "button" : undefined}
+      onClick={onClick}
+      onMouseDown={(e) => e.stopPropagation()}
+      className="relative size-[16px] bg-[#c0c0c0] win-frame-outside flex items-center justify-center cursor-pointer"
+    >
       {icon === "minimize" && (
-        <div className="w-full h-[2px] bg-black" />
+        <div className="absolute bottom-[3px] left-1/2 -translate-x-1/2 w-[6px] h-[2px] bg-black" />
       )}
       {icon === "maximize" && (
-        <img
-          src="/assets/maximize.png"
-          alt=""
-          className="size-[8px] absolute bottom-[2px] left-1/2 -translate-x-1/2"
-        />
+        <div className="absolute top-[3px] left-1/2 -translate-x-1/2 size-[8px] border border-black border-t-2" />
       )}
       {icon === "close" && (
-        <img
-          src="/assets/close.png"
-          alt=""
-          className="size-[8px] absolute bottom-[2px] left-1/2 -translate-x-1/2"
-        />
+        <span className="text-black text-[10px] leading-none font-bold font-mono">
+          ×
+        </span>
       )}
-    </div>
+    </Tag>
   );
 }
 
