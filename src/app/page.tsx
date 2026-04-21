@@ -1,65 +1,131 @@
-import Image from "next/image";
+import { WindowFrame } from "@/components/WindowFrame";
+
+const navItems = [
+  { label: "ABOUT", href: "#about" },
+  { label: "PROJECTS", href: "#projects" },
+  { label: "CONTACTS", href: "#contacts" },
+  { label: "TECH STACK", href: "#tech" },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="h-screen w-full bg-white overflow-hidden flex flex-col">
+      {/* Navbar */}
+      <div className="relative mx-auto w-full max-w-[1300px] px-6 pt-4 shrink-0">
+        <div className="relative h-[56px] w-full bg-[#c0c0c0] win-frame-outside">
+          <div className="absolute inset-[6px] bg-[#000080] flex items-center px-2">
+            <p className="absolute left-1/2 -translate-x-1/2 text-[#e6e6e6] text-[28px] tracking-[0.72px]">
+              JJ
+            </p>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 min-h-0 mx-auto w-full max-w-[1300px] px-6 pt-6 pb-3 flex flex-col">
+        {/* Top row: [links + HI IM stacked] | [picture spans both] */}
+        <div className="flex gap-6 flex-1 min-h-0">
+          {/* Left column: links on top, HI IM below */}
+          <div className="w-[280px] shrink-0 flex flex-col">
+            <div className="flex-1 min-h-0">
+              <WindowFrame
+                title="jj"
+                className="w-full h-full"
+                statusText="4 object(s)"
+              >
+                <nav className="flex flex-col gap-3 pt-2">
+                  {navItems.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="flex items-center gap-3 hover:opacity-70"
+                    >
+                      <img
+                        src="/assets/folder.png"
+                        alt=""
+                        className="size-[28px]"
+                      />
+                      <span className="text-[20px] tracking-[0.48px] underline leading-none">
+                        {item.label}
+                      </span>
+                    </a>
+                  ))}
+                </nav>
+              </WindowFrame>
+            </div>
+            <p className="text-[clamp(40px,5vw,72px)] tracking-[2px] leading-none mt-3 shrink-0">
+              HI IM
+            </p>
+          </div>
+
+          {/* Right column: picture fills entire left-column height */}
+          <div className="flex-1 min-w-0 border-2 border-black overflow-hidden">
+            <img
+              src="/assets/hero.png"
+              alt="JJ at a cafe"
+              className="w-full h-full object-cover"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
         </div>
-      </main>
-    </div>
+
+        {/* JJ PARDO spans full width */}
+        <p className="text-[clamp(80px,13vw,200px)] text-[#000080] tracking-[2px] leading-none mt-2 whitespace-nowrap shrink-0">
+          JJ PARDO!
+        </p>
+
+        {/* Description + socials */}
+        <div className="mt-3 shrink-0">
+          <p className="text-[18px] tracking-[0.48px]">
+            a computer science student at{" "}
+            <span className="text-[#3168ff]">Ateneo De Manila University</span>
+          </p>
+          <div className="mt-2 flex gap-4 items-center">
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block size-[26px] hover:opacity-80"
+            >
+              <img
+                src="/assets/linkedin.png"
+                alt="LinkedIn"
+                className="w-full h-full object-contain"
+              />
+            </a>
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block size-[26px] hover:opacity-80"
+            >
+              <img
+                src="/assets/github.svg"
+                alt="GitHub"
+                className="w-full h-full object-contain"
+              />
+            </a>
+            <a
+              href="mailto:pardojeromeimportant@gmail.com"
+              className="block size-[26px] hover:opacity-80"
+            >
+              <img
+                src="/assets/envelope.svg"
+                alt="Email"
+                className="w-full h-full object-contain"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Nyan cat — bottom-right */}
+      <div className="fixed right-0 bottom-0 w-[clamp(140px,18vw,240px)] aspect-square pointer-events-none z-20">
+        <img
+          src="/assets/nyancat.png"
+          alt=""
+          className="w-full h-full object-contain"
+        />
+      </div>
+    </main>
   );
 }
