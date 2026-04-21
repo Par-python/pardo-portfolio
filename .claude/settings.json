@@ -26,7 +26,9 @@
       "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/group.png \"https://www.figma.com/api/mcp/asset/47b54a63-ae07-4fbc-9f47-0783dc05e0bf\")",
       "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/trio.png \"https://www.figma.com/api/mcp/asset/a29ee3ad-d771-4809-9719-af76ac9e6184\")",
       "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/race.png \"https://www.figma.com/api/mcp/asset/447d3d47-3080-49b3-b688-36abd9ba1d0c\")",
-      "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/electronics.png \"https://www.figma.com/api/mcp/asset/3033c6ef-a4d8-4207-a4f5-6c07c7a1e074\")"
+      "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/electronics.png \"https://www.figma.com/api/mcp/asset/3033c6ef-a4d8-4207-a4f5-6c07c7a1e074\")",
+      "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/projects/s1napse-popup.png \"https://www.figma.com/api/mcp/asset/536105ce-8ca5-46aa-a811-ef39d93a3b78\")",
+      "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/projects/one-big-match.png \"https://www.figma.com/api/mcp/asset/dc34732b-2974-4313-87c8-751767c10d4d\")"
     ]
   }
 }

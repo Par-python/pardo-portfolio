@@ -1,20 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BootLoader } from "@/components/BootLoader";
 import { ContactsModal } from "@/components/ContactsModal";
+import { ProjectsPopup } from "@/components/ProjectsPopup";
 import { TechStackModal } from "@/components/TechStackModal";
 import { WindowFrame } from "@/components/WindowFrame";
 
-type ModalKind = "contacts" | "tech";
+type ModalKind = "contacts" | "tech" | "projectsPopup";
 const BASE_Z = 40;
+const BOOT_KEY = "jjpardo-boot-shown";
+const POPUP_SHOWN_KEY = "jjpardo-popup-shown";
+const BOOT_HIDE_MS = 2800;
+const POPUP_DELAY_MS = 6500;
 
 export default function Home() {
   const [openModals, setOpenModals] = useState<Set<ModalKind>>(new Set());
+  const [newsUnlocked, setNewsUnlocked] = useState(false);
   const [zOrder, setZOrder] = useState<Record<ModalKind, number>>({
     contacts: BASE_Z,
     tech: BASE_Z,
+    projectsPopup: BASE_Z,
   });
+
+  useEffect(() => {
+    if (sessionStorage.getItem(POPUP_SHOWN_KEY)) {
+      setNewsUnlocked(true);
+      return;
+    }
+    const bootAlreadyShown = sessionStorage.getItem(BOOT_KEY);
+    const delay = bootAlreadyShown
+      ? POPUP_DELAY_MS
+      : BOOT_HIDE_MS + POPUP_DELAY_MS;
+    const t = setTimeout(() => {
+      setOpenModals((prev) => new Set(prev).add("projectsPopup"));
+      setZOrder((prev) => {
+        const others = (Object.keys(prev) as ModalKind[])
+          .filter((k) => k !== "projectsPopup")
+          .map((k) => prev[k]);
+        const maxOther = others.length ? Math.max(...others) : BASE_Z - 1;
+        return { ...prev, projectsPopup: maxOther + 1 };
+      });
+    }, delay);
+    return () => clearTimeout(t);
+  }, []);
 
   const bringToFront = (kind: ModalKind) =>
     setZOrder((prev) => {
@@ -37,11 +66,25 @@ export default function Home() {
       return next;
     });
 
-  const navItems: { label: string; onClick?: () => void; href?: string }[] = [
+  const navItems: {
+    label: string;
+    onClick?: () => void;
+    href?: string;
+    color?: string;
+  }[] = [
     { label: "ABOUT", href: "/about" },
     { label: "PROJECTS", href: "/projects" },
     { label: "CONTACTS", onClick: () => openModal("contacts") },
     { label: "TECH STACK", onClick: () => openModal("tech") },
+    ...(newsUnlocked
+      ? [
+          {
+            label: "NEWS",
+            onClick: () => openModal("projectsPopup"),
+            color: "#ff3a3a",
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -58,6 +101,16 @@ export default function Home() {
         onClose={() => closeModal("tech")}
         zIndex={zOrder.tech}
         onFocus={() => bringToFront("tech")}
+      />
+      <ProjectsPopup
+        open={openModals.has("projectsPopup")}
+        onClose={() => {
+          closeModal("projectsPopup");
+          setNewsUnlocked(true);
+          sessionStorage.setItem(POPUP_SHOWN_KEY, "1");
+        }}
+        zIndex={zOrder.projectsPopup}
+        onFocus={() => bringToFront("projectsPopup")}
       />
       <main className="md:h-screen w-full bg-white md:overflow-hidden flex flex-col">
         {/* Navbar */}
@@ -97,7 +150,10 @@ export default function Home() {
                             alt=""
                             className="size-[24px] sm:size-[28px]"
                           />
-                          <span className="text-[18px] sm:text-[20px] tracking-[0.48px] underline leading-none">
+                          <span
+                            className="text-[18px] sm:text-[20px] tracking-[0.48px] underline leading-none"
+                            style={item.color ? { color: item.color } : undefined}
+                          >
                             {item.label}
                           </span>
                         </button>
@@ -112,7 +168,10 @@ export default function Home() {
                             alt=""
                             className="size-[24px] sm:size-[28px]"
                           />
-                          <span className="text-[18px] sm:text-[20px] tracking-[0.48px] underline leading-none">
+                          <span
+                            className="text-[18px] sm:text-[20px] tracking-[0.48px] underline leading-none"
+                            style={item.color ? { color: item.color } : undefined}
+                          >
                             {item.label}
                           </span>
                         </a>
