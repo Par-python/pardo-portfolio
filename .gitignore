@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Admin panel — local-only, never committed
+/data/
+/src/app/admin/
+/src/app/api/admin/
+/src/lib/admin-content.ts
+/docs/superpowers/plans/2026-04-21-admin-panel.md
