@@ -2,28 +2,44 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useLiveContent } from "@/lib/useLiveContent";
 import { WindowFrame } from "./WindowFrame";
 
 type FeaturedProject = {
+  kind: "project";
   title: string;
   image: string;
   description: string;
 };
 
-const featured: FeaturedProject[] = [
+type FeaturedNews = {
+  kind: "news";
+  title: string;
+  image: string;
+  description: string;
+  date: string;
+  link: string;
+};
+
+type FeaturedItem = FeaturedProject | FeaturedNews;
+type PopupContent = { featured: FeaturedItem[] };
+
+const FALLBACK: PopupContent = { featured: [
   {
+    kind: "project",
     title: "S1NAPSE",
     image: "/assets/projects/s1napse-popup.png",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget,",
   },
   {
+    kind: "project",
     title: "ONE BIG MATCH",
     image: "/assets/projects/one-big-match.png",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget,",
   },
-];
+] };
 
 type ProjectsPopupProps = {
   open: boolean;
@@ -38,6 +54,7 @@ export function ProjectsPopup({
   zIndex = 40,
   onFocus,
 }: ProjectsPopupProps) {
+  const { featured } = useLiveContent<PopupContent>("popup", FALLBACK);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const dragRef = useRef<{
     startX: number;
@@ -111,7 +128,7 @@ export function ProjectsPopup({
           title="PROJECTS (POP UP)"
           titleBarColor="#ff3a3a"
           bodyColor="#fffcd8"
-          statusText="3 object(s)"
+          statusText={`${featured.length} object(s)`}
           onClose={onClose}
           className="max-h-[85vh] h-[640px] sm:h-[720px]"
         >
@@ -126,7 +143,7 @@ export function ProjectsPopup({
               </p>
               <Link
                 href="/projects"
-                className="text-[#ff3a3a] text-[14px] sm:text-[16px] tracking-[0.32px] underline leading-[18px] sm:leading-[20px]"
+                className="font-vt323 text-[#ff3a3a] text-[16px] sm:text-[20px] tracking-[0.32px] underline leading-[18px] sm:leading-[20px]"
               >
                 see all projects
               </Link>
@@ -141,28 +158,43 @@ export function ProjectsPopup({
               }}
             />
 
-            {/* Featured project rows */}
+            {/* Featured rows */}
             <ul className="mt-5 flex flex-col gap-5">
-              {featured.map((project) => (
+              {featured.map((item, idx) => (
                 <li
-                  key={project.title}
+                  key={`${item.kind}-${idx}-${item.title}`}
                   className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-start"
                 >
                   <div className="w-full sm:w-[56%] aspect-[393/219] overflow-hidden bg-black shrink-0">
                     <img
-                      src={project.image}
-                      alt={project.title}
+                      src={item.image}
+                      alt={item.title}
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-black text-[28px] sm:text-[36px] tracking-[0.72px] leading-[1] break-words">
-                      {project.title}
+                    {item.kind === "news" && (
+                      <p className="font-vt323 text-[#ff3a3a] text-[12px] sm:text-[14px] tracking-[0.3px] uppercase leading-none">
+                        News · {item.date}
+                      </p>
+                    )}
+                    <p className="mt-1 text-black text-[20px] sm:text-[24px] tracking-[0.48px] leading-[1] break-words">
+                      {item.title}
                     </p>
-                    <p className="mt-2 text-black text-[16px] sm:text-[20px] tracking-[0.4px] leading-[20px]">
+                    <p className="mt-2 text-black font-vt323 text-[14px] sm:text-[16px] tracking-[0.28px] leading-[16px]">
                       {" "}
-                      {project.description}
+                      {item.description}
                     </p>
+                    {item.kind === "news" && (
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-block font-vt323 text-[#ff3a3a] text-[14px] sm:text-[18px] tracking-[0.28px] underline leading-[16px]"
+                      >
+                        learn more →
+                      </a>
+                    )}
                   </div>
                 </li>
               ))}

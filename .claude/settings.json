@@ -28,7 +28,19 @@
       "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/race.png \"https://www.figma.com/api/mcp/asset/447d3d47-3080-49b3-b688-36abd9ba1d0c\")",
       "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/about/electronics.png \"https://www.figma.com/api/mcp/asset/3033c6ef-a4d8-4207-a4f5-6c07c7a1e074\")",
       "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/projects/s1napse-popup.png \"https://www.figma.com/api/mcp/asset/536105ce-8ca5-46aa-a811-ef39d93a3b78\")",
-      "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/projects/one-big-match.png \"https://www.figma.com/api/mcp/asset/dc34732b-2974-4313-87c8-751767c10d4d\")"
+      "Bash(curl -sL -o /Users/jjpardo/Documents/pardo-portfolio/public/assets/projects/one-big-match.png \"https://www.figma.com/api/mcp/asset/dc34732b-2974-4313-87c8-751767c10d4d\")",
+      "Bash(curl -s http://localhost:3000/api/admin/content/contacts)",
+      "Bash(curl -s -X PUT http://localhost:3000/api/admin/content/contacts -H \"content-type: application/json\" -d '{\"email\":\"test@test.com\",\"phone\":\"\",\"linkedin\":\"\",\"github\":\"\"}')",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/api/admin/content/bogus)",
+      "Bash(curl -s http://localhost:3000/api/admin/content/contacts -w \"\\\\nHTTP %{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:3000/admin)",
+      "Bash(curl -s http://localhost:3000/api/admin/content/popup)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/admin)",
+      "Bash(curl -s -X PUT http://localhost:3000/api/admin/content/popup -H \"content-type: application/json\" -d '{\"featured\":[{\"kind\":\"project\",\"title\":\"P\",\"image\":\"\",\"description\":\"\"},{\"kind\":\"news\",\"title\":\"N\",\"image\":\"\",\"description\":\"\",\"date\":\"Apr 2026\",\"link\":\"https://example.com\"}]}')",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"projects: %{http_code}\\\\n\" http://localhost:3000/projects)",
+      "Bash(curl -s -o /dev/null -w \"admin: %{http_code}\\\\n\" http://localhost:3000/admin)",
+      "Bash(curl -s -X PUT http://localhost:3000/api/admin/content/contacts -H \"content-type: application/json\" -d '{\"email\":\"live@test.com\",\"phone\":\"555\",\"linkedin\":\"https://li.example\",\"github\":\"https://gh.example\"}')"
     ]
   }
 }

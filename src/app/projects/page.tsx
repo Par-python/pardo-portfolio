@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useLiveContent } from "@/lib/useLiveContent";
 import { WindowFrame } from "@/components/WindowFrame";
 
 type Project = {
@@ -8,8 +9,9 @@ type Project = {
   image: string;
   description: string;
 };
+type ProjectsContent = { projects: Project[] };
 
-const projects: Project[] = [
+const FALLBACK: ProjectsContent = { projects: [
   {
     title: "TedX",
     image: "/assets/projects/tedx.png",
@@ -46,7 +48,7 @@ const projects: Project[] = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu.",
   },
-];
+] };
 
 const navLinks: { label: string; href: string }[] = [
   { label: "HOME", href: "/" },
@@ -56,6 +58,7 @@ const navLinks: { label: string; href: string }[] = [
 ];
 
 export default function ProjectsPage() {
+  const { projects } = useLiveContent<ProjectsContent>("projects", FALLBACK);
   return (
     <main className="min-h-screen w-full bg-white flex flex-col">
       {/* Navbar */}
@@ -75,7 +78,7 @@ export default function ProjectsPage() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-white text-[12px] sm:text-[18px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap"
+                  className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap"
                 >
                   {link.label}
                 </Link>
@@ -90,7 +93,7 @@ export default function ProjectsPage() {
         <h1 className="anim-proj-heading text-[#000080] text-[clamp(56px,13vw,128px)] tracking-[2.56px] leading-[0.9] whitespace-nowrap">
           Projects
         </h1>
-        <p className="anim-proj-intro mt-4 sm:mt-6 text-[14px] sm:text-[20px] tracking-[0.4px] leading-[20px] sm:leading-[28px] max-w-[720px]">
+        <p className="anim-proj-intro mt-4 sm:mt-6 font-vt323 text-[16px] sm:text-[22px] tracking-[0.4px] leading-[20px] sm:leading-[28px] max-w-[720px]">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus
           mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus
           sit amet orci mollis, at iaculis nulla fringilla.
@@ -117,7 +120,7 @@ export default function ProjectsPage() {
                       />
                     ) : null}
                   </div>
-                  <p className="text-[14px] sm:text-[16px] tracking-[0.32px] leading-[18px] sm:leading-[20px]">
+                  <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px]">
                     {project.description}
                   </p>
                 </div>
@@ -146,7 +149,7 @@ export default function ProjectsPage() {
             }}
           />
         </div>
-        <p className="anim-proj-footer absolute left-1/2 -translate-x-1/2 bottom-8 sm:bottom-14 text-white text-[16px] sm:text-[24px] tracking-[0.48px] whitespace-nowrap">
+        <p className="anim-proj-footer absolute left-1/2 -translate-x-1/2 bottom-8 sm:bottom-14 font-vt323 text-white text-[18px] sm:text-[28px] tracking-[0.48px] whitespace-nowrap">
           more projects to come!
         </p>
       </section>

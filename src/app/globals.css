@@ -20,6 +20,7 @@
   --color-win-grey-light: var(--win-grey-light);
   --color-win-link: var(--win-link);
   --font-pixelify: var(--font-pixelify);
+  --font-vt323: var(--font-vt323);
 }
 
 body {

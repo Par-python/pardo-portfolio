@@ -151,7 +151,7 @@ export default function Home() {
                             className="size-[24px] sm:size-[28px]"
                           />
                           <span
-                            className="text-[18px] sm:text-[20px] tracking-[0.48px] underline leading-none"
+                            className="font-vt323 text-[20px] sm:text-[24px] tracking-[0.48px] underline leading-none"
                             style={item.color ? { color: item.color } : undefined}
                           >
                             {item.label}
@@ -169,7 +169,7 @@ export default function Home() {
                             className="size-[24px] sm:size-[28px]"
                           />
                           <span
-                            className="text-[18px] sm:text-[20px] tracking-[0.48px] underline leading-none"
+                            className="font-vt323 text-[20px] sm:text-[24px] tracking-[0.48px] underline leading-none"
                             style={item.color ? { color: item.color } : undefined}
                           >
                             {item.label}
@@ -202,7 +202,7 @@ export default function Home() {
 
           {/* Description + socials */}
           <div className="mt-3 shrink-0">
-            <p className="anim-description text-[14px] sm:text-[18px] tracking-[0.48px]">
+            <p className="anim-description font-vt323 text-[16px] sm:text-[20px] tracking-[0.48px]">
               a computer science student at{" "}
               <span className="text-[#3168ff]">
                 Ateneo De Manila University

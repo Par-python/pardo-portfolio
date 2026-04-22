@@ -1,7 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLiveContent } from "@/lib/useLiveContent";
 import { WindowFrame } from "./WindowFrame";
+
+type ContactsContent = {
+  email: string;
+  phone: string;
+  linkedin: string;
+  github: string;
+};
+
+const CONTACTS_FALLBACK: ContactsContent = {
+  email: "pardojeromeimportant@gmail.com",
+  phone: "+639695666410",
+  linkedin: "https://linkedin.com",
+  github: "https://github.com",
+};
 
 type ContactsModalProps = {
   open: boolean;
@@ -16,6 +31,7 @@ export function ContactsModal({
   zIndex = 40,
   onFocus,
 }: ContactsModalProps) {
+  const contacts = useLiveContent<ContactsContent>("contacts", CONTACTS_FALLBACK);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
   const windowRef = useRef<HTMLDivElement>(null);
@@ -101,7 +117,7 @@ export function ContactsModal({
               </p>
               <a
                 href="#"
-                className="text-[#26903d] text-[14px] sm:text-[16px] tracking-[0.32px] underline leading-[18px] sm:leading-[20px]"
+                className="font-vt323 text-[#26903d] text-[16px] sm:text-[20px] tracking-[0.32px] underline leading-[18px] sm:leading-[20px]"
               >
                 connect with me :)
               </a>
@@ -117,28 +133,28 @@ export function ContactsModal({
             />
 
             {/* Info */}
-            <div className="mt-4 sm:mt-6 text-[14px] sm:text-[20px] tracking-[0.4px] leading-[20px] sm:leading-[28px]">
+            <div className="mt-4 sm:mt-6 font-vt323 text-[16px] sm:text-[22px] tracking-[0.4px] leading-[20px] sm:leading-[28px]">
               <p className="break-all">
                 <span className="font-bold">email: </span>
                 <a
-                  href="mailto:pardojeromeimportant@gmail.com"
+                  href={`mailto:${contacts.email}`}
                   className="hover:underline"
                 >
-                  pardojeromeimportant@gmail.com
+                  {contacts.email}
                 </a>
               </p>
               <p>
                 <span className="font-bold">phone no: </span>
-                <span>+639695666410</span>
+                <span>{contacts.phone}</span>
               </p>
             </div>
 
             {/* Socials */}
             <div className="mt-3 sm:mt-5">
-              <p className="font-bold text-[14px] sm:text-[20px] tracking-[0.4px]">socials:</p>
+              <p className="font-vt323 font-bold text-[16px] sm:text-[22px] tracking-[0.4px]">socials:</p>
               <div className="mt-2 flex gap-3 sm:gap-4 items-center">
                 <a
-                  href="https://linkedin.com"
+                  href={contacts.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block size-[32px] hover:opacity-80"
@@ -150,7 +166,7 @@ export function ContactsModal({
                   />
                 </a>
                 <a
-                  href="https://github.com"
+                  href={contacts.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block size-[32px] hover:opacity-80"
@@ -162,7 +178,7 @@ export function ContactsModal({
                   />
                 </a>
                 <a
-                  href="mailto:pardojeromeimportant@gmail.com"
+                  href={`mailto:${contacts.email}`}
                   className="block size-[32px] hover:opacity-80"
                 >
                   <img

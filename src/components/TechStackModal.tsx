@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLiveContent } from "@/lib/useLiveContent";
 import { WindowFrame } from "./WindowFrame";
 
 type TechStackModalProps = {
@@ -11,8 +12,9 @@ type TechStackModalProps = {
 };
 
 type TechItem = { label: string; src: string };
+type TechStackContent = { items: TechItem[] };
 
-const techItems: TechItem[] = [
+const FALLBACK: TechStackContent = { items: [
   { label: "react", src: "/assets/tech/react.svg" },
   { label: "tailwind", src: "/assets/tech/tailwind.svg" },
   { label: "typescript", src: "/assets/tech/typescript.svg" },
@@ -24,7 +26,7 @@ const techItems: TechItem[] = [
   { label: "nodejs", src: "/assets/tech/nodejs.svg" },
   { label: "java", src: "/assets/tech/java.svg" },
   { label: "django", src: "/assets/tech/django.svg" },
-];
+] };
 
 export function TechStackModal({
   open,
@@ -32,6 +34,10 @@ export function TechStackModal({
   zIndex = 40,
   onFocus,
 }: TechStackModalProps) {
+  const { items: techItems } = useLiveContent<TechStackContent>(
+    "tech-stack",
+    FALLBACK
+  );
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const dragRef = useRef<{
     startX: number;
@@ -136,7 +142,7 @@ export function TechStackModal({
                     alt={item.label}
                     className="size-[28px] sm:size-[44px] object-contain"
                   />
-                  <span className="text-[12px] sm:text-[16px] tracking-[0.32px] text-black leading-[16px] sm:leading-[20px] truncate max-w-full">
+                  <span className="font-vt323 text-[14px] sm:text-[20px] tracking-[0.32px] text-black leading-[16px] sm:leading-[20px] truncate max-w-full">
                     {item.label}
                   </span>
                 </li>
