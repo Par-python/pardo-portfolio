@@ -8,8 +8,23 @@ type Project = {
   title: string;
   image: string;
   description: string;
+  tech?: string[];
 };
 type ProjectsContent = { projects: Project[] };
+
+const TECH_ICONS: Record<string, string> = {
+  react: "/assets/tech/react.svg",
+  tailwind: "/assets/tech/tailwind.svg",
+  typescript: "/assets/tech/typescript.svg",
+  postgresql: "/assets/tech/postgresql.svg",
+  python: "/assets/tech/python.svg",
+  firebase: "/assets/tech/firebase.svg",
+  git: "/assets/tech/git.svg",
+  gcloud: "/assets/tech/gcloud.svg",
+  nodejs: "/assets/tech/nodejs.svg",
+  java: "/assets/tech/java.svg",
+  django: "/assets/tech/django.svg",
+};
 
 const FALLBACK: ProjectsContent = { projects: [
   {
@@ -17,36 +32,42 @@ const FALLBACK: ProjectsContent = { projects: [
     image: "/assets/projects/tedx.png",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.",
+    tech: ["react", "tailwind", "typescript"],
   },
   {
     title: "S1napse",
     image: "/assets/projects/s1napse.png",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.",
+    tech: ["react", "typescript", "firebase", "tailwind"],
   },
   {
     title: "S1napse",
     image: "/assets/projects/s1napse-alt.png",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.",
+    tech: ["python", "django", "postgresql"],
   },
   {
     title: "Sigla",
     image: "/assets/projects/sigla.png",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu.",
+    tech: ["nodejs", "typescript", "gcloud"],
   },
   {
     title: "Sigla",
     image: "",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu.",
+    tech: ["java", "git"],
   },
   {
     title: "Sigla",
     image: "",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu.",
+    tech: ["react", "tailwind"],
   },
 ] };
 
@@ -110,8 +131,8 @@ export default function ProjectsPage() {
                 statusText="8 object(s)"
                 className="h-[340px] sm:h-[400px] lg:h-[460px]"
               >
-                <div className="flex flex-col gap-4 h-full">
-                  <div className="w-full aspect-[380/241] border border-black/20 overflow-hidden bg-[#f4f4f4]">
+                <div className="flex flex-col gap-3 sm:gap-4 h-full min-h-0">
+                  <div className="w-full h-[140px] sm:h-[170px] lg:h-[200px] border border-black/20 overflow-hidden bg-[#f4f4f4] shrink-0">
                     {project.image ? (
                       <img
                         src={project.image}
@@ -120,9 +141,25 @@ export default function ProjectsPage() {
                       />
                     ) : null}
                   </div>
-                  <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px]">
+                  <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px] flex-1 min-h-0 overflow-y-auto">
                     {project.description}
                   </p>
+                  {project.tech && project.tech.length > 0 ? (
+                    <ul className="flex flex-wrap gap-2 sm:gap-3 items-center shrink-0">
+                      {project.tech.map((key) =>
+                        TECH_ICONS[key] ? (
+                          <li key={key}>
+                            <img
+                              src={TECH_ICONS[key]}
+                              alt={key}
+                              title={key}
+                              className="size-[20px] sm:size-[24px] object-contain"
+                            />
+                          </li>
+                        ) : null
+                      )}
+                    </ul>
+                  ) : null}
                 </div>
               </WindowFrame>
             </li>
