@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { renderRichText } from "@/lib/richText";
 import { WindowFrame } from "./WindowFrame";
 
 type Project = {
@@ -9,6 +10,9 @@ type Project = {
   description: string;
   details?: string;
   tech?: string[];
+  link?: string;
+  createdAt?: string;
+  team?: string[];
 };
 
 type ProjectDetailModalProps = {
@@ -120,23 +124,34 @@ export function ProjectDetailModal({
             />
 
             {project.image ? (
-              <div className="mt-4 w-full aspect-[16/9] border border-black/20 overflow-hidden bg-[#f4f4f4]">
+              <div className="mt-4 w-full aspect-[16/9] border border-black/20 overflow-hidden bg-[#f4f4f4] flex items-center justify-center">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover"
+                  className="max-w-full max-h-full object-contain"
                 />
               </div>
             ) : null}
 
             <p className="mt-4 font-vt323 text-[18px] sm:text-[22px] tracking-[0.4px] leading-[22px] sm:leading-[26px]">
-              {project.description}
+              {renderRichText(project.description)}
             </p>
 
             {project.details ? (
               <p className="mt-3 font-vt323 text-[16px] sm:text-[20px] tracking-[0.4px] leading-[20px] sm:leading-[24px] whitespace-pre-line">
-                {project.details}
+                {renderRichText(project.details)}
               </p>
+            ) : null}
+
+            {project.link ? (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-block font-vt323 text-[#000080] text-[16px] sm:text-[20px] tracking-[0.32px] underline leading-none"
+              >
+                visit project →
+              </a>
             ) : null}
 
             {project.tech && project.tech.length > 0 ? (

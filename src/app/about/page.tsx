@@ -1,12 +1,51 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { ContactsModal } from "@/components/ContactsModal";
+import { DraggableStickers } from "@/components/DraggableStickers";
 import { WindowFrame } from "@/components/WindowFrame";
+import { useParallax } from "@/lib/useParallax";
+import { renderRichText, stripRichText } from "@/lib/richText";
+import { useTypewriter } from "@/lib/useTypewriter";
+import { useLiveContent } from "@/lib/useLiveContent";
+
+type AboutContent = {
+  images: {
+    cafe: string;
+    group: string;
+    trio: string;
+    race: string;
+    electronics: string;
+  };
+  descriptions: {
+    block1: string;
+    block2: string;
+  };
+};
+
+const FALLBACK_BLOCK_1 =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.";
+
+const FALLBACK_BLOCK_2 =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.";
+
+const ABOUT_FALLBACK: AboutContent = {
+  images: {
+    cafe: "/assets/about/cafe.png",
+    group: "/assets/about/group.png",
+    trio: "/assets/about/trio.png",
+    race: "/assets/about/race.png",
+    electronics: "/assets/about/electronics.png",
+  },
+  descriptions: { block1: FALLBACK_BLOCK_1, block2: FALLBACK_BLOCK_2 },
+};
+
+const AboutContentCtx = createContext<AboutContent>(ABOUT_FALLBACK);
 
 export default function AboutPage() {
   const [contactsOpen, setContactsOpen] = useState(false);
+  const aboutContent = useLiveContent<AboutContent>("about", ABOUT_FALLBACK);
 
   const navLinks: {
     label: string;
@@ -19,7 +58,9 @@ export default function AboutPage() {
   ];
 
   return (
+    <AboutContentCtx.Provider value={aboutContent}>
     <main className="relative w-full bg-white overflow-x-hidden isolate">
+      <DraggableStickers />
       {/* Navbar (shared pattern with projects page) */}
       <div className="anim-navbar mx-auto w-full max-w-[1300px] px-3 sm:px-6 pt-3 sm:pt-4 shrink-0">
         <div className="relative h-[48px] sm:h-[64px] w-full bg-[#c0c0c0] win-frame-outside">
@@ -96,6 +137,55 @@ export default function AboutPage() {
         onClose={() => setContactsOpen(false)}
       />
     </main>
+    </AboutContentCtx.Provider>
+  );
+}
+
+function TypewriterText({
+  text,
+  className = "",
+}: {
+  text: string;
+  className?: string;
+}) {
+  // Typewriter types the stripped (plain) text; once done, swap to rich JSX.
+  const plain = stripRichText(text);
+  const { ref, display, done } = useTypewriter(plain);
+  return (
+    <p
+      ref={ref as React.RefObject<HTMLParagraphElement>}
+      className={`whitespace-pre-line ${className}`}
+    >
+      {done ? renderRichText(text) : display}
+      {!done && <span className="anim-cursor-blink">_</span>}
+    </p>
+  );
+}
+
+function ParallaxBlock({
+  speed,
+  children,
+  className,
+  style,
+}: {
+  speed: number;
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const { ref, offset } = useParallax(speed);
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        ...style,
+        transform: `translateY(${offset}px)`,
+        willChange: "transform",
+      }}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -106,6 +196,7 @@ export default function AboutPage() {
  * our own navbar height (~80) to re-anchor. Only visible on md+.
  * ========================================================================= */
 function DesktopLayout() {
+  const about = useContext(AboutContentCtx);
   return (
     <div className="hidden md:block relative z-10">
       <div
@@ -136,34 +227,18 @@ function DesktopLayout() {
             statusText="8 object(s)"
             className="h-full w-full"
           >
-            <div className="flex flex-col gap-6 h-full">
-              <p className="text-[20px] tracking-[0.4px] leading-[20px]">
-                <span className="font-bold">
-                  {" "}
-                  Lorem ipsum dolor sit amet,
-                </span>
-                <span>
-                  {" "}
-                  consectetur adipiscing elit. Nulla risus mi, mattis quis
-                  rutrum eget, mattis mattis arcu. Mauris eleifend risus sit
-                  amet orci mollis, at iaculis nulla fringilla.{" "}
-                </span>
-              </p>
-              <p className="text-[20px] tracking-[0.4px] leading-[20px]">
-                <span>
-                  {" "}
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-                  risus mi, mattis quis rutrum eget, mattis mattis arcu.{" "}
-                </span>
-                <span className="font-bold">Mauris eleifend risus </span>
-                <span>sit amet orci mollis, at iaculis nulla fringilla. </span>
-              </p>
+            <div className="h-full">
+              <TypewriterText
+                text={about.descriptions.block1}
+                className="font-vt323 text-[22px] tracking-[0.4px] leading-[24px]"
+              />
             </div>
           </WindowFrame>
         </div>
 
         {/* Right cafe photo frame */}
-        <div
+        <ParallaxBlock
+          speed={0.08}
           className="anim-proj-grid absolute"
           style={{ left: 775, top: 295, width: 536, height: 500 }}
         >
@@ -174,16 +249,17 @@ function DesktopLayout() {
           >
             <div className="w-full h-full overflow-hidden">
               <img
-                src="/assets/about/cafe.png"
+                src={about.images.cafe}
                 alt=""
                 className="w-full h-full object-cover"
               />
             </div>
           </WindowFrame>
-        </div>
+        </ParallaxBlock>
 
         {/* Row 2: wide group photo frame */}
-        <div
+        <ParallaxBlock
+          speed={-0.06}
           className="anim-proj-grid absolute"
           style={{ left: 145, top: 700, width: 606, height: 400 }}
         >
@@ -194,16 +270,17 @@ function DesktopLayout() {
           >
             <div className="w-full h-full overflow-hidden">
               <img
-                src="/assets/about/group.png"
+                src={about.images.group}
                 alt=""
                 className="w-full h-full object-cover"
               />
             </div>
           </WindowFrame>
-        </div>
+        </ParallaxBlock>
 
         {/* Row 2 right: trio photo frame */}
-        <div
+        <ParallaxBlock
+          speed={0.1}
           className="anim-proj-grid absolute"
           style={{ left: 783, top: 820, width: 528, height: 280 }}
         >
@@ -214,16 +291,17 @@ function DesktopLayout() {
           >
             <div className="w-full h-full overflow-hidden">
               <img
-                src="/assets/about/trio.png"
+                src={about.images.trio}
                 alt=""
                 className="w-full h-full object-cover"
               />
             </div>
           </WindowFrame>
-        </div>
+        </ParallaxBlock>
 
         {/* Row 3: race photo left */}
-        <div
+        <ParallaxBlock
+          speed={-0.08}
           className="anim-proj-grid absolute"
           style={{ left: 145, top: 1130, width: 421, height: 706 }}
         >
@@ -234,13 +312,13 @@ function DesktopLayout() {
           >
             <div className="w-full h-full overflow-hidden">
               <img
-                src="/assets/about/race.png"
+                src={about.images.race}
                 alt=""
                 className="w-full h-full object-cover"
               />
             </div>
           </WindowFrame>
-        </div>
+        </ParallaxBlock>
 
         {/* Row 3 right top: text window */}
         <div
@@ -253,33 +331,17 @@ function DesktopLayout() {
             className="h-full w-full"
           >
             <div className="flex flex-col h-full justify-center">
-              <p className="text-[20px] tracking-[0.4px] leading-[20px]">
-                <span className="font-bold">
-                  {" "}
-                  Lorem ipsum dolor sit amet,
-                </span>
-                <span>
-                  {" "}
-                  consectetur adipiscing elit. Nulla risus mi, mattis quis
-                  rutrum eget, mattis mattis arcu. Mauris eleifend risus sit
-                  amet orci mollis, at iaculis nulla fringilla.{" "}
-                </span>
-              </p>
-              <p className="mt-6 text-[20px] tracking-[0.4px] leading-[20px]">
-                <span>
-                  {" "}
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-                  risus mi, mattis quis rutrum eget, mattis mattis arcu.{" "}
-                </span>
-                <span className="font-bold">Mauris eleifend risus </span>
-                <span>sit amet orci mollis, at iaculis nulla fringilla. </span>
-              </p>
+              <TypewriterText
+                text={about.descriptions.block2}
+                className="font-vt323 text-[22px] tracking-[0.4px] leading-[24px]"
+              />
             </div>
           </WindowFrame>
         </div>
 
         {/* Row 3 right bottom: electronics photo */}
-        <div
+        <ParallaxBlock
+          speed={0.07}
           className="anim-proj-grid absolute"
           style={{ left: 587, top: 1460, width: 720, height: 375 }}
         >
@@ -290,13 +352,13 @@ function DesktopLayout() {
           >
             <div className="w-full h-full overflow-hidden">
               <img
-                src="/assets/about/electronics.png"
+                src={about.images.electronics}
                 alt=""
                 className="w-full h-full object-cover"
               />
             </div>
           </WindowFrame>
-        </div>
+        </ParallaxBlock>
       </div>
     </div>
   );
@@ -306,14 +368,15 @@ function DesktopLayout() {
  * Responsive fallback: stacked grid for mobile/tablet (<md)
  * ========================================================================= */
 function ResponsiveLayout() {
+  const about = useContext(AboutContentCtx);
   const blocks: { type: "text" | "image"; src?: string }[] = [
     { type: "text" },
-    { type: "image", src: "/assets/about/cafe.png" },
-    { type: "image", src: "/assets/about/group.png" },
-    { type: "image", src: "/assets/about/trio.png" },
-    { type: "image", src: "/assets/about/race.png" },
+    { type: "image", src: about.images.cafe },
+    { type: "image", src: about.images.group },
+    { type: "image", src: about.images.trio },
+    { type: "image", src: about.images.race },
     { type: "text" },
-    { type: "image", src: "/assets/about/electronics.png" },
+    { type: "image", src: about.images.electronics },
   ];
 
   return (
@@ -339,18 +402,14 @@ function ResponsiveLayout() {
                 </div>
               ) : (
                 <div className="flex flex-col gap-4 h-full">
-                  <p className="text-[14px] sm:text-[16px] tracking-[0.32px] leading-[18px] sm:leading-[20px]">
-                    <span className="font-bold">
-                      {" "}
-                      Lorem ipsum dolor sit amet,
-                    </span>
-                    <span>
-                      {" "}
-                      consectetur adipiscing elit. Nulla risus mi, mattis quis
-                      rutrum eget, mattis mattis arcu. Mauris eleifend risus
-                      sit amet orci mollis, at iaculis nulla fringilla.
-                    </span>
-                  </p>
+                  <TypewriterText
+                    text={
+                      idx === 0
+                        ? about.descriptions.block1
+                        : about.descriptions.block2
+                    }
+                    className="font-vt323 text-[16px] sm:text-[20px] tracking-[0.32px] leading-[18px] sm:leading-[22px]"
+                  />
                 </div>
               )}
             </WindowFrame>

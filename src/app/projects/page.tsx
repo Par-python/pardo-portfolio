@@ -1,10 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useLiveContent } from "@/lib/useLiveContent";
+import { renderRichText } from "@/lib/richText";
 import { ContactsModal } from "@/components/ContactsModal";
+import { ProjectContextMenu } from "@/components/ProjectContextMenu";
 import { ProjectDetailModal } from "@/components/ProjectDetailModal";
+import { ProjectPropertiesDialog } from "@/components/ProjectPropertiesDialog";
 import { WindowFrame } from "@/components/WindowFrame";
 
 type Project = {
@@ -13,6 +16,9 @@ type Project = {
   description: string;
   details?: string;
   tech?: string[];
+  link?: string;
+  createdAt?: string;
+  team?: string[];
 };
 type ProjectsContent = { projects: Project[] };
 
@@ -79,7 +85,49 @@ export default function ProjectsPage() {
   const { projects } = useLiveContent<ProjectsContent>("projects", FALLBACK);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [contactsOpen, setContactsOpen] = useState(false);
+  const [menu, setMenu] = useState<{ x: number; y: number; idx: number } | null>(
+    null
+  );
+  const [propsIdx, setPropsIdx] = useState<number | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const longPressRef = useRef<{ timer: number; fired: boolean } | null>(null);
   const activeProject = activeIdx !== null ? projects[activeIdx] ?? null : null;
+  const propsProject = propsIdx !== null ? projects[propsIdx] ?? null : null;
+
+  const openContextMenu = (x: number, y: number, idx: number) =>
+    setMenu({ x, y, idx });
+
+  const handleContextMenu = (idx: number) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    openContextMenu(e.clientX, e.clientY, idx);
+  };
+
+  const handleTouchStart = (idx: number) => (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    const x = touch.clientX;
+    const y = touch.clientY;
+    if (longPressRef.current) {
+      window.clearTimeout(longPressRef.current.timer);
+    }
+    longPressRef.current = {
+      fired: false,
+      timer: window.setTimeout(() => {
+        if (longPressRef.current) longPressRef.current.fired = true;
+        openContextMenu(x, y, idx);
+      }, 500),
+    };
+  };
+
+  const cancelLongPress = () => {
+    if (longPressRef.current) {
+      window.clearTimeout(longPressRef.current.timer);
+    }
+  };
+
+  const flashToast = (msg: string) => {
+    setToast(msg);
+    window.setTimeout(() => setToast(null), 1800);
+  };
 
   const navLinks: {
     label: string;
@@ -155,7 +203,18 @@ export default function ProjectsPage() {
             <li key={`${project.title}-${idx}`}>
               <button
                 type="button"
-                onClick={() => setActiveIdx(idx)}
+                onClick={() => {
+                  if (longPressRef.current?.fired) {
+                    longPressRef.current.fired = false;
+                    return;
+                  }
+                  setActiveIdx(idx);
+                }}
+                onContextMenu={handleContextMenu(idx)}
+                onTouchStart={handleTouchStart(idx)}
+                onTouchEnd={cancelLongPress}
+                onTouchMove={cancelLongPress}
+                onTouchCancel={cancelLongPress}
                 className="block w-full text-left cursor-pointer hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#000080]"
                 aria-label={`Open ${project.title} details`}
               >
@@ -175,7 +234,7 @@ export default function ProjectsPage() {
                     ) : null}
                   </div>
                   <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px] flex-1 min-h-0 overflow-y-auto">
-                    {project.description}
+                    {renderRichText(project.description)}
                   </p>
                   {project.tech && project.tech.length > 0 ? (
                     <ul className="flex flex-wrap gap-2 sm:gap-3 items-center shrink-0">
@@ -210,6 +269,53 @@ export default function ProjectsPage() {
         open={contactsOpen}
         onClose={() => setContactsOpen(false)}
       />
+      <ProjectPropertiesDialog
+        project={propsProject}
+        onClose={() => setPropsIdx(null)}
+      />
+      {menu ? (
+        <ProjectContextMenu
+          x={menu.x}
+          y={menu.y}
+          onClose={() => setMenu(null)}
+          items={[
+            {
+              label: "Open in new window",
+              disabled: !projects[menu.idx]?.link,
+              onClick: () => {
+                const link = projects[menu.idx]?.link;
+                if (link) window.open(link, "_blank", "noopener,noreferrer");
+              },
+            },
+            {
+              label: "Properties",
+              onClick: () => setPropsIdx(menu.idx),
+            },
+            {
+              label: "Copy link",
+              disabled: !projects[menu.idx]?.link,
+              onClick: async () => {
+                const link = projects[menu.idx]?.link;
+                if (!link) return;
+                try {
+                  await navigator.clipboard.writeText(link);
+                  flashToast("Link copied!");
+                } catch {
+                  flashToast("Copy failed");
+                }
+              },
+            },
+          ]}
+        />
+      ) : null}
+      {toast ? (
+        <div
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[210] bg-[#c0c0c0] win-frame-outside px-4 py-2 text-[14px] tracking-[0.28px]"
+          role="status"
+        >
+          {toast}
+        </div>
+      ) : null}
 
       {/* Bottom gradient to LinkedIn blue */}
       <section className="relative mt-8 sm:mt-12 w-full">

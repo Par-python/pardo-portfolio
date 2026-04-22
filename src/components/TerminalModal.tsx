@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { stripRichText } from "@/lib/richText";
 import { WindowFrame } from "./WindowFrame";
 
 type Project = {
@@ -9,6 +10,9 @@ type Project = {
   description: string;
   details?: string;
   tech?: string[];
+  link?: string;
+  createdAt?: string;
+  team?: string[];
 };
 
 type ContactsContent = {
@@ -150,7 +154,7 @@ export function TerminalModal({
   const index = useMemo(() => {
     const items: SearchHit[] = [];
     projects.forEach((p, idx) => {
-      const snippet = (p.description || "").slice(0, 80);
+      const snippet = stripRichText(p.description || "").slice(0, 80);
       items.push({ type: "project", idx, title: p.title, snippet });
     });
     techItems.forEach((t) => items.push({ type: "tech", label: t.label }));
@@ -171,8 +175,8 @@ export function TerminalModal({
       const p = projects[hit.idx];
       return [
         p.title,
-        p.description,
-        p.details ?? "",
+        stripRichText(p.description),
+        stripRichText(p.details),
         (p.tech ?? []).join(" "),
       ]
         .join(" ")

@@ -18,6 +18,9 @@ type Project = {
   description: string;
   details?: string;
   tech?: string[];
+  link?: string;
+  createdAt?: string;
+  team?: string[];
 };
 type ProjectsContent = { projects: Project[] };
 
@@ -306,13 +309,13 @@ export default function Home() {
           <div className="flex flex-col md:flex-row gap-2 md:gap-6 md:flex-1 md:min-h-0">
             {/* Left column: links on top, HI IM below */}
             <div className="w-full md:w-[400px] md:shrink-0 flex flex-col">
-              <div className="anim-links md:flex-1 md:min-h-0 h-[240px] md:h-auto">
+              <div className="anim-links md:flex-1 md:min-h-0 h-[320px] sm:h-[320px] md:h-auto">
                 <WindowFrame
                   title="jj"
                   className="w-full h-full"
                   statusText="4 object(s)"
                 >
-                  <nav className="flex flex-col gap-2 sm:gap-4 h-full justify-center items-start">
+                  <nav className="flex flex-col gap-5 sm:gap-4 h-full justify-center items-start">
                     {navItems.map((item) =>
                       item.onClick ? (
                         <button
@@ -362,7 +365,7 @@ export default function Home() {
             </div>
 
             {/* Right column: picture */}
-            <div className="anim-picture md:flex-1 md:min-w-0 border-2 border-black overflow-hidden h-[220px] sm:h-[280px] md:h-auto">
+            <div className="anim-picture md:flex-1 md:min-w-0 border-2 border-black overflow-hidden h-[180px] sm:h-[260px] md:h-auto">
               <img
                 src="/assets/hero.png"
                 alt="JJ at a cafe"
@@ -372,12 +375,12 @@ export default function Home() {
           </div>
 
           {/* JJ PARDO */}
-          <p className="anim-jj-pardo text-[clamp(40px,13vw,150px)] text-[#000080] tracking-[2px] leading-none mt-2 whitespace-nowrap shrink-0">
+          <p className="anim-jj-pardo text-[clamp(44px,14vw,150px)] text-[#000080] tracking-[1px] sm:tracking-[2px] leading-none mt-3 md:mt-2 whitespace-nowrap shrink-0">
             JJ PARDO!
           </p>
 
           {/* Description + socials */}
-          <div className="-mt-2 shrink-0">
+          <div className="mt-1 md:-mt-2 shrink-0">
             <p className="anim-description font-vt323 text-[16px] sm:text-[20px] tracking-[0.48px]">
               a computer science student at{" "}
               <span className="text-[#3168ff]">
@@ -451,13 +454,6 @@ export default function Home() {
               }`}
             />
           </button>
-        </div>
-        <div className="anim-nyan md:hidden self-end w-[72px] aspect-square pointer-events-none -mt-1 mr-1">
-          <img
-            src="/assets/nyancat.png"
-            alt=""
-            className="w-full h-full object-contain -scale-x-100 [image-rendering:pixelated]"
-          />
         </div>
       </main>
     </>
