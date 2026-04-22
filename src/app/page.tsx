@@ -153,16 +153,31 @@ export default function Home() {
     const maxX = Math.max(0, vw - spriteSize - 24);
     const maxY = Math.max(0, vh - spriteSize - 24);
 
-    const waypoints: NyanPos[] = [
-      { x: -maxX, y: -maxY * 0.3, flip: true },
-      { x: -maxX * 0.2, y: -maxY * 0.8, flip: false },
-      { x: -maxX * 0.7, y: -maxY * 0.5, flip: true },
-      { x: -maxX * 0.1, y: -maxY * 0.2, flip: false },
-      { x: -maxX * 0.5, y: -maxY * 0.9, flip: true },
-      { x: 0, y: 0, flip: false },
+    // Origin is bottom-right (translate 0,0). Negative x = left, negative y = up.
+    // Route: sweep left along bottom → up to top-left → across top-right →
+    // down to mid-right → back home. Loops the whole viewport.
+    const targets: { x: number; y: number }[] = [
+      { x: -maxX * 0.95, y: -maxY * 0.05 }, // bottom-left
+      { x: -maxX * 0.95, y: -maxY * 0.95 }, // top-left
+      { x: -maxX * 0.5, y: -maxY * 0.6 },   // mid-top center
+      { x: -maxX * 0.05, y: -maxY * 0.95 }, // top-right
+      { x: -maxX * 0.05, y: -maxY * 0.4 },  // mid-right
+      { x: -maxX * 0.5, y: -maxY * 0.15 },  // swing back through bottom-middle
+      { x: 0, y: 0 },                       // home
     ];
 
-    const stepMs = 700;
+    let prevX = 0;
+    const waypoints: NyanPos[] = targets.map((t, i) => {
+      const dx = t.x - prevX;
+      prevX = t.x;
+      const isHome = i === targets.length - 1;
+      // flip=true means sprite faces right (no -scale-x-100). Moving right => dx > 0.
+      // Always end at the original facing so home looks unchanged.
+      const flip = isHome ? false : dx > 0;
+      return { x: t.x, y: t.y, flip };
+    });
+
+    const stepMs = 800;
     waypoints.forEach((wp, i) => {
       const id = window.setTimeout(() => {
         setNyanPos(wp);
@@ -415,24 +430,28 @@ export default function Home() {
         </div>
 
         {/* Nyan cat — fixed on desktop, inline at content-end on mobile */}
-        <button
-          type="button"
-          onClick={startNyanTraverse}
-          aria-label="Poke nyan cat"
-          className="anim-nyan hidden md:block fixed right-0 bottom-0 w-[clamp(120px,18vw,240px)] aspect-square z-20 cursor-pointer bg-transparent border-0 p-0"
+        <div
+          className="hidden md:block fixed right-0 bottom-0 w-[clamp(120px,18vw,240px)] aspect-square z-20"
           style={{
             transform: `translate(${nyanPos.x}px, ${nyanPos.y}px)`,
-            transition: "transform 0.7s steps(12, end)",
+            transition: "transform 0.8s steps(16, end)",
           }}
         >
-          <img
-            src="/assets/nyancat.png"
-            alt=""
-            className={`w-full h-full object-contain [image-rendering:pixelated] ${
-              nyanPos.flip ? "" : "-scale-x-100"
-            }`}
-          />
-        </button>
+          <button
+            type="button"
+            onClick={startNyanTraverse}
+            aria-label="Poke nyan cat"
+            className="anim-nyan block w-full h-full cursor-pointer bg-transparent border-0 p-0"
+          >
+            <img
+              src="/assets/nyancat.png"
+              alt=""
+              className={`w-full h-full object-contain [image-rendering:pixelated] ${
+                nyanPos.flip ? "" : "-scale-x-100"
+              }`}
+            />
+          </button>
+        </div>
         <div className="anim-nyan md:hidden self-end w-[72px] aspect-square pointer-events-none -mt-1 mr-1">
           <img
             src="/assets/nyancat.png"
