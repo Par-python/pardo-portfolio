@@ -14,8 +14,8 @@ type ContactsContent = {
 const CONTACTS_FALLBACK: ContactsContent = {
   email: "pardojeromeimportant@gmail.com",
   phone: "+639695666410",
-  linkedin: "https://linkedin.com",
-  github: "https://github.com",
+  linkedin: "https://www.linkedin.com/in/john-jerome-pardo-24b5bb311/",
+  github: "https://github.com/Par-python",
 };
 
 type ContactsModalProps = {
@@ -116,7 +116,9 @@ export function ContactsModal({
                 CONTACTS
               </p>
               <a
-                href="#"
+                href={contacts.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="font-vt323 text-[#26903d] text-[16px] sm:text-[20px] tracking-[0.32px] underline leading-[18px] sm:leading-[20px]"
               >
                 connect with me :)

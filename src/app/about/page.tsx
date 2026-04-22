@@ -1,40 +1,64 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
+import { ContactsModal } from "@/components/ContactsModal";
 import { WindowFrame } from "@/components/WindowFrame";
 
-const navLinks: { label: string; href: string }[] = [
-  { label: "HOME", href: "/" },
-  { label: "ABOUT", href: "/about" },
-  { label: "PROJECTS", href: "/projects" },
-  { label: "CONTACTS", href: "/?modal=contacts" },
-];
-
 export default function AboutPage() {
+  const [contactsOpen, setContactsOpen] = useState(false);
+
+  const navLinks: {
+    label: string;
+    href?: string;
+    onClick?: () => void;
+  }[] = [
+    { label: "ABOUT", href: "/about" },
+    { label: "PROJECTS", href: "/projects" },
+    { label: "CONTACTS", onClick: () => setContactsOpen(true) },
+  ];
+
   return (
     <main className="relative w-full bg-white overflow-x-hidden isolate">
       {/* Navbar (shared pattern with projects page) */}
       <div className="anim-navbar mx-auto w-full max-w-[1300px] px-3 sm:px-6 pt-3 sm:pt-4 shrink-0">
         <div className="relative h-[48px] sm:h-[64px] w-full bg-[#c0c0c0] win-frame-outside">
           <div className="absolute inset-[6px] bg-[#000080] flex items-center px-3 sm:px-4 gap-3">
-            <img
-              src="/assets/folder.png"
-              alt=""
-              className="size-[20px] sm:size-[28px] shrink-0"
-            />
-            <p className="text-[#e6e6e6] text-[20px] sm:text-[28px] tracking-[0.72px] leading-none">
-              JJ
-            </p>
+            <Link
+              href="/"
+              className="flex items-center gap-3 hover:opacity-80 leading-none"
+              aria-label="Home"
+            >
+              <img
+                src="/assets/folder.png"
+                alt=""
+                className="size-[20px] sm:size-[28px] shrink-0"
+              />
+              <span className="text-[#e6e6e6] text-[20px] sm:text-[28px] tracking-[0.72px] leading-none">
+                JJ
+              </span>
+            </Link>
             <nav className="ml-auto flex gap-3 sm:gap-6 items-center">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="text-white text-[12px] sm:text-[18px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) =>
+                link.href ? (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap"
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <button
+                    key={link.label}
+                    type="button"
+                    onClick={link.onClick}
+                    className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap cursor-pointer bg-transparent border-0 p-0"
+                  >
+                    {link.label}
+                  </button>
+                )
+              )}
             </nav>
           </div>
         </div>
@@ -66,6 +90,11 @@ export default function AboutPage() {
           />
         </div>
       </section>
+
+      <ContactsModal
+        open={contactsOpen}
+        onClose={() => setContactsOpen(false)}
+      />
     </main>
   );
 }

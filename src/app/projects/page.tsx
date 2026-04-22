@@ -1,13 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useLiveContent } from "@/lib/useLiveContent";
+import { ContactsModal } from "@/components/ContactsModal";
+import { ProjectDetailModal } from "@/components/ProjectDetailModal";
 import { WindowFrame } from "@/components/WindowFrame";
 
 type Project = {
   title: string;
   image: string;
   description: string;
+  details?: string;
   tech?: string[];
 };
 type ProjectsContent = { projects: Project[] };
@@ -71,39 +75,62 @@ const FALLBACK: ProjectsContent = { projects: [
   },
 ] };
 
-const navLinks: { label: string; href: string }[] = [
-  { label: "HOME", href: "/" },
-  { label: "ABOUT", href: "/#about" },
-  { label: "PROJECTS", href: "/projects" },
-  { label: "CONTACTS", href: "/?modal=contacts" },
-];
-
 export default function ProjectsPage() {
   const { projects } = useLiveContent<ProjectsContent>("projects", FALLBACK);
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const [contactsOpen, setContactsOpen] = useState(false);
+  const activeProject = activeIdx !== null ? projects[activeIdx] ?? null : null;
+
+  const navLinks: {
+    label: string;
+    href?: string;
+    onClick?: () => void;
+  }[] = [
+    { label: "ABOUT", href: "/about" },
+    { label: "PROJECTS", href: "/projects" },
+    { label: "CONTACTS", onClick: () => setContactsOpen(true) },
+  ];
   return (
     <main className="min-h-screen w-full bg-white flex flex-col">
       {/* Navbar */}
       <div className="anim-navbar mx-auto w-full max-w-[1300px] px-3 sm:px-6 pt-3 sm:pt-4 shrink-0">
         <div className="relative h-[48px] sm:h-[64px] w-full bg-[#c0c0c0] win-frame-outside">
           <div className="absolute inset-[6px] bg-[#000080] flex items-center px-3 sm:px-4 gap-3">
-            <img
-              src="/assets/folder.png"
-              alt=""
-              className="size-[20px] sm:size-[28px] shrink-0"
-            />
-            <p className="text-[#e6e6e6] text-[20px] sm:text-[28px] tracking-[0.72px] leading-none">
-              JJ
-            </p>
+            <Link
+              href="/"
+              className="flex items-center gap-3 hover:opacity-80 leading-none"
+              aria-label="Home"
+            >
+              <img
+                src="/assets/folder.png"
+                alt=""
+                className="size-[20px] sm:size-[28px] shrink-0"
+              />
+              <span className="text-[#e6e6e6] text-[20px] sm:text-[28px] tracking-[0.72px] leading-none">
+                JJ
+              </span>
+            </Link>
             <nav className="ml-auto flex gap-3 sm:gap-6 items-center">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) =>
+                link.href ? (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap"
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <button
+                    key={link.label}
+                    type="button"
+                    onClick={link.onClick}
+                    className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap cursor-pointer bg-transparent border-0 p-0"
+                  >
+                    {link.label}
+                  </button>
+                )
+              )}
             </nav>
           </div>
         </div>
@@ -126,13 +153,19 @@ export default function ProjectsPage() {
         <ul className="anim-proj-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {projects.map((project, idx) => (
             <li key={`${project.title}-${idx}`}>
+              <button
+                type="button"
+                onClick={() => setActiveIdx(idx)}
+                className="block w-full text-left cursor-pointer hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#000080]"
+                aria-label={`Open ${project.title} details`}
+              >
               <WindowFrame
                 title={project.title}
                 statusText="8 object(s)"
-                className="h-[340px] sm:h-[400px] lg:h-[460px]"
+                className="h-[280px] sm:h-[320px] lg:h-[360px]"
               >
                 <div className="flex flex-col gap-3 sm:gap-4 h-full min-h-0">
-                  <div className="w-full h-[140px] sm:h-[170px] lg:h-[200px] border border-black/20 overflow-hidden bg-[#f4f4f4] shrink-0">
+                  <div className="w-full h-[110px] sm:h-[130px] lg:h-[150px] border border-black/20 overflow-hidden bg-[#f4f4f4] shrink-0">
                     {project.image ? (
                       <img
                         src={project.image}
@@ -162,10 +195,21 @@ export default function ProjectsPage() {
                   ) : null}
                 </div>
               </WindowFrame>
+              </button>
             </li>
           ))}
         </ul>
       </section>
+
+      <ProjectDetailModal
+        project={activeProject}
+        onClose={() => setActiveIdx(null)}
+        techIcons={TECH_ICONS}
+      />
+      <ContactsModal
+        open={contactsOpen}
+        onClose={() => setContactsOpen(false)}
+      />
 
       {/* Bottom gradient to LinkedIn blue */}
       <section className="relative mt-8 sm:mt-12 w-full">

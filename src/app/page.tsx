@@ -1,27 +1,92 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BootLoader } from "@/components/BootLoader";
 import { ContactsModal } from "@/components/ContactsModal";
+import { ProjectDetailModal } from "@/components/ProjectDetailModal";
 import { ProjectsPopup } from "@/components/ProjectsPopup";
 import { TechStackModal } from "@/components/TechStackModal";
+import { TerminalModal } from "@/components/TerminalModal";
 import { WindowFrame } from "@/components/WindowFrame";
+import { useLiveContent } from "@/lib/useLiveContent";
 
-type ModalKind = "contacts" | "tech" | "projectsPopup";
+type ModalKind = "contacts" | "tech" | "projectsPopup" | "terminal";
+
+type Project = {
+  title: string;
+  image: string;
+  description: string;
+  details?: string;
+  tech?: string[];
+};
+type ProjectsContent = { projects: Project[] };
+
+type ContactsContent = {
+  email: string;
+  phone: string;
+  linkedin: string;
+  github: string;
+};
+
+type TechItem = { label: string; src: string };
+type TechStackContent = { items: TechItem[] };
+
+const TECH_ICONS: Record<string, string> = {
+  react: "/assets/tech/react.svg",
+  tailwind: "/assets/tech/tailwind.svg",
+  typescript: "/assets/tech/typescript.svg",
+  postgresql: "/assets/tech/postgresql.svg",
+  python: "/assets/tech/python.svg",
+  firebase: "/assets/tech/firebase.svg",
+  git: "/assets/tech/git.svg",
+  gcloud: "/assets/tech/gcloud.svg",
+  nodejs: "/assets/tech/nodejs.svg",
+  java: "/assets/tech/java.svg",
+  django: "/assets/tech/django.svg",
+};
+
+const PROJECTS_FALLBACK: ProjectsContent = { projects: [] };
+const CONTACTS_FALLBACK: ContactsContent = {
+  email: "pardojeromeimportant@gmail.com",
+  phone: "+639695666410",
+  linkedin: "https://www.linkedin.com/in/john-jerome-pardo-24b5bb311/",
+  github: "https://github.com/Par-python",
+};
+const TECH_FALLBACK: TechStackContent = { items: [] };
 const BASE_Z = 40;
 const BOOT_KEY = "jjpardo-boot-shown";
 const POPUP_SHOWN_KEY = "jjpardo-popup-shown";
 const BOOT_HIDE_MS = 2800;
 const POPUP_DELAY_MS = 6500;
 
+type NyanPos = { x: number; y: number; flip: boolean };
+
 export default function Home() {
   const [openModals, setOpenModals] = useState<Set<ModalKind>>(new Set());
   const [newsUnlocked, setNewsUnlocked] = useState(false);
+  const [nyanPos, setNyanPos] = useState<NyanPos>({ x: 0, y: 0, flip: false });
+  const [nyanTraveling, setNyanTraveling] = useState(false);
+  const nyanTimers = useRef<number[]>([]);
   const [zOrder, setZOrder] = useState<Record<ModalKind, number>>({
     contacts: BASE_Z,
     tech: BASE_Z,
     projectsPopup: BASE_Z,
+    terminal: BASE_Z,
   });
+  const [activeProjectIdx, setActiveProjectIdx] = useState<number | null>(null);
+
+  const projectsContent = useLiveContent<ProjectsContent>(
+    "projects",
+    PROJECTS_FALLBACK
+  );
+  const contactsContent = useLiveContent<ContactsContent>(
+    "contacts",
+    CONTACTS_FALLBACK
+  );
+  const techContent = useLiveContent<TechStackContent>(
+    "tech-stack",
+    TECH_FALLBACK
+  );
 
   useEffect(() => {
     if (sessionStorage.getItem(POPUP_SHOWN_KEY)) {
@@ -44,6 +109,71 @@ export default function Home() {
     }, delay);
     return () => clearTimeout(t);
   }, []);
+
+  useEffect(() => {
+    return () => {
+      nyanTimers.current.forEach((id) => window.clearTimeout(id));
+      nyanTimers.current = [];
+    };
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setOpenModals((prev) => {
+          const next = new Set(prev);
+          if (next.has("terminal")) {
+            next.delete("terminal");
+          } else {
+            next.add("terminal");
+          }
+          return next;
+        });
+        setZOrder((prev) => {
+          const others = (Object.keys(prev) as ModalKind[])
+            .filter((k) => k !== "terminal")
+            .map((k) => prev[k]);
+          const maxOther = others.length ? Math.max(...others) : BASE_Z - 1;
+          return { ...prev, terminal: maxOther + 1 };
+        });
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const startNyanTraverse = () => {
+    if (nyanTraveling) return;
+    setNyanTraveling(true);
+
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const spriteSize = Math.max(120, Math.min(vw * 0.18, 240));
+    const maxX = Math.max(0, vw - spriteSize - 24);
+    const maxY = Math.max(0, vh - spriteSize - 24);
+
+    const waypoints: NyanPos[] = [
+      { x: -maxX, y: -maxY * 0.3, flip: true },
+      { x: -maxX * 0.2, y: -maxY * 0.8, flip: false },
+      { x: -maxX * 0.7, y: -maxY * 0.5, flip: true },
+      { x: -maxX * 0.1, y: -maxY * 0.2, flip: false },
+      { x: -maxX * 0.5, y: -maxY * 0.9, flip: true },
+      { x: 0, y: 0, flip: false },
+    ];
+
+    const stepMs = 700;
+    waypoints.forEach((wp, i) => {
+      const id = window.setTimeout(() => {
+        setNyanPos(wp);
+        if (i === waypoints.length - 1) {
+          const endId = window.setTimeout(() => setNyanTraveling(false), stepMs);
+          nyanTimers.current.push(endId);
+        }
+      }, i * stepMs);
+      nyanTimers.current.push(id);
+    });
+  };
 
   const bringToFront = (kind: ModalKind) =>
     setZOrder((prev) => {
@@ -76,6 +206,7 @@ export default function Home() {
     { label: "PROJECTS", href: "/projects" },
     { label: "CONTACTS", onClick: () => openModal("contacts") },
     { label: "TECH STACK", onClick: () => openModal("tech") },
+    { label: "TERMINAL", onClick: () => openModal("terminal") },
     ...(newsUnlocked
       ? [
           {
@@ -111,6 +242,36 @@ export default function Home() {
         }}
         zIndex={zOrder.projectsPopup}
         onFocus={() => bringToFront("projectsPopup")}
+      />
+      <ProjectDetailModal
+        project={
+          activeProjectIdx !== null
+            ? projectsContent.projects[activeProjectIdx] ?? null
+            : null
+        }
+        onClose={() => setActiveProjectIdx(null)}
+        techIcons={TECH_ICONS}
+      />
+      <TerminalModal
+        open={openModals.has("terminal")}
+        onClose={() => closeModal("terminal")}
+        zIndex={zOrder.terminal}
+        onFocus={() => bringToFront("terminal")}
+        projects={projectsContent.projects}
+        contacts={contactsContent}
+        techItems={techContent.items}
+        onOpenProject={(idx) => {
+          closeModal("terminal");
+          setActiveProjectIdx(idx);
+        }}
+        onOpenContacts={() => {
+          closeModal("terminal");
+          openModal("contacts");
+        }}
+        onOpenTechStack={() => {
+          closeModal("terminal");
+          openModal("tech");
+        }}
       />
       <main className="md:h-screen w-full bg-white md:overflow-hidden flex flex-col">
         {/* Navbar */}
@@ -201,7 +362,7 @@ export default function Home() {
           </p>
 
           {/* Description + socials */}
-          <div className="mt-3 shrink-0">
+          <div className="-mt-2 shrink-0">
             <p className="anim-description font-vt323 text-[16px] sm:text-[20px] tracking-[0.48px]">
               a computer science student at{" "}
               <span className="text-[#3168ff]">
@@ -210,7 +371,7 @@ export default function Home() {
             </p>
             <div className="anim-socials mt-2 flex gap-3 sm:gap-4 items-center">
               <a
-                href="https://linkedin.com"
+                href={contactsContent.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block size-[28px] sm:size-[32px] hover:opacity-80"
@@ -224,7 +385,7 @@ export default function Home() {
                 />
               </a>
               <a
-                href="https://github.com"
+                href={contactsContent.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block size-[28px] sm:size-[32px] hover:opacity-80"
@@ -238,7 +399,7 @@ export default function Home() {
                 />
               </a>
               <a
-                href="mailto:pardojeromeimportant@gmail.com"
+                href={`mailto:${contactsContent.email}`}
                 className="block size-[28px] sm:size-[32px] hover:opacity-80"
               >
                 <img
@@ -254,13 +415,24 @@ export default function Home() {
         </div>
 
         {/* Nyan cat — fixed on desktop, inline at content-end on mobile */}
-        <div className="anim-nyan hidden md:block fixed right-0 bottom-0 w-[clamp(120px,18vw,240px)] aspect-square pointer-events-none z-20">
+        <button
+          type="button"
+          onClick={startNyanTraverse}
+          aria-label="Poke nyan cat"
+          className="anim-nyan hidden md:block fixed right-0 bottom-0 w-[clamp(120px,18vw,240px)] aspect-square z-20 cursor-pointer bg-transparent border-0 p-0"
+          style={{
+            transform: `translate(${nyanPos.x}px, ${nyanPos.y}px)`,
+            transition: "transform 0.7s steps(12, end)",
+          }}
+        >
           <img
             src="/assets/nyancat.png"
             alt=""
-            className="w-full h-full object-contain -scale-x-100 [image-rendering:pixelated]"
+            className={`w-full h-full object-contain [image-rendering:pixelated] ${
+              nyanPos.flip ? "" : "-scale-x-100"
+            }`}
           />
-        </div>
+        </button>
         <div className="anim-nyan md:hidden self-end w-[72px] aspect-square pointer-events-none -mt-1 mr-1">
           <img
             src="/assets/nyancat.png"
