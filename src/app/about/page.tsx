@@ -25,10 +25,10 @@ type AboutContent = {
 };
 
 const FALLBACK_BLOCK_1 =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.";
+  "At my core, I just love creating things, especially when it involves diving into data and interpreting it to uncover meaningful insights. As a software developer and Computer Science student at Ateneo de Manila University, my work is driven by a desire to build practical solutions for the everyday problems I see around me or experience myself. Whether I am engineering an AI-powered urban policy simulator or building a tool to seamlessly organize class schedules, I thrive on turning complex information into intuitive, user-centric experiences. Ultimately, I want to keep bridging the gap between rigorous engineering and thoughtful design to build software that actually makes life a little easier.";
 
 const FALLBACK_BLOCK_2 =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.";
+  "My journey into tech started in an unexpected place: Minecraft. I spent hours wiring redstone to build automated sorting systems, functioning vending machines, and virtual banks. That early fascination with logic and automation naturally spilled over into the physical world when I picked up an Arduino kit to build simple hardware circuits. Before long, I was translating that same problem-solving mindset into code. What started as building websites for peer businesses and creating small software tools to fix everyday inconveniences quickly escalated. Today, I am architecting complex, data-driven platforms and AI-integrated applications that tackle high-stakes challenges.";
 
 const ABOUT_FALLBACK: AboutContent = {
   images: {

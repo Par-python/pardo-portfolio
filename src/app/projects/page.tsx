@@ -190,9 +190,7 @@ export default function ProjectsPage() {
           Projects
         </h1>
         <p className="anim-proj-intro mt-4 sm:mt-6 font-vt323 text-[16px] sm:text-[22px] tracking-[0.4px] leading-[20px] sm:leading-[28px] max-w-[720px]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus
-          mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus
-          sit amet orci mollis, at iaculis nulla fringilla.
+       From AI policy simulators to everyday utilities, these projects reflect my drive to solve real-world problems. Here is a look at how I turn complex data into scalable, user-centric software.
         </p>
       </section>
 
