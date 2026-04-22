@@ -238,7 +238,7 @@ function DesktopLayout() {
 
         {/* Right cafe photo frame */}
         <ParallaxBlock
-          speed={0.08}
+          speed={0.03}
           className="anim-proj-grid absolute"
           style={{ left: 775, top: 295, width: 536, height: 500 }}
         >
@@ -280,7 +280,7 @@ function DesktopLayout() {
 
         {/* Row 2 right: trio photo frame */}
         <ParallaxBlock
-          speed={0.1}
+          speed={0.04}
           className="anim-proj-grid absolute"
           style={{ left: 783, top: 820, width: 528, height: 280 }}
         >
@@ -390,7 +390,9 @@ function ResponsiveLayout() {
             <WindowFrame
               title="S1napse"
               statusText="8 object(s)"
-              className="h-[280px] sm:h-[340px]"
+              className={
+                block.type === "image" ? "h-[280px] sm:h-[340px]" : "min-h-[180px]"
+              }
             >
               {block.type === "image" ? (
                 <div className="w-full h-full overflow-hidden">
@@ -401,7 +403,7 @@ function ResponsiveLayout() {
                   />
                 </div>
               ) : (
-                <div className="flex flex-col gap-4 h-full">
+                <div className="flex flex-col gap-4">
                   <TypewriterText
                     text={
                       idx === 0

@@ -41,7 +41,8 @@
       "Bash(curl -s -o /dev/null -w \"projects: %{http_code}\\\\n\" http://localhost:3000/projects)",
       "Bash(curl -s -o /dev/null -w \"admin: %{http_code}\\\\n\" http://localhost:3000/admin)",
       "Bash(curl -s -X PUT http://localhost:3000/api/admin/content/contacts -H \"content-type: application/json\" -d '{\"email\":\"live@test.com\",\"phone\":\"555\",\"linkedin\":\"https://li.example\",\"github\":\"https://gh.example\"}')",
-      "Bash(git -C /Users/jjpardo/Documents/pardo-portfolio check-ignore -v src/lib/admin-content.ts src/app/admin src/app/api/admin)"
+      "Bash(git -C /Users/jjpardo/Documents/pardo-portfolio check-ignore -v src/lib/admin-content.ts src/app/admin src/app/api/admin)",
+      "Bash(node -e *)"
     ]
   }
 }

@@ -18,6 +18,11 @@ const vt323 = VT323({
 export const metadata: Metadata = {
   title: "JJ Pardo — Portfolio",
   description: "A computer science student at Ateneo De Manila University",
+  icons: {
+    icon: "/assets/j-pard-folio-favicon.png",
+    shortcut: "/assets/j-pard-folio-favicon.png",
+    apple: "/assets/j-pard-folio-favicon.png",
+  },
 };
 
 export default function RootLayout({

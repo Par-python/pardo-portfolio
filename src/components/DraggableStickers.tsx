@@ -5,11 +5,13 @@ import { useEffect, useRef, useState } from "react";
 type StickerDef = {
   id: string;
   label: string;
-  initial: { x: number; y: number; rotate: number };
+  // anchor defaults to "left" (x measured from left edge of container).
+  // When "right", x is measured as distance from the right edge.
+  initial: { x: number; y: number; rotate: number; anchor?: "left" | "right" };
   svg: React.ReactNode;
 };
 
-const STORAGE_KEY = "jjpardo-stickers-v3";
+const STORAGE_KEY = "jjpardo-stickers-v4";
 
 const coffeeSvg = (
   <svg viewBox="0 0 16 16" className="w-full h-full [image-rendering:pixelated]" shapeRendering="crispEdges">
@@ -78,51 +80,79 @@ const floppySvg = (
   </svg>
 );
 
-// Positions are spread across the about page's height (~1860px desktop + gradient).
-// x is clamped to positive values; the parent has overflow-x-hidden so negatives would clip.
+// Positions spread across the about page. Left-anchored stickers use positive x
+// measured from the container's left; right-anchored ones use x as distance
+// from the right edge — resolved against window.innerWidth on mount.
 const STICKERS: StickerDef[] = [
   {
     id: "coffee",
     label: "Coffee",
-    initial: { x: 40, y: 280, rotate: -8 },
+    initial: { x: 40, y: 280, rotate: -8, anchor: "left" },
     svg: coffeeSvg,
   },
   {
     id: "headphones",
     label: "Headphones",
-    initial: { x: 40, y: 460, rotate: 12 },
+    initial: { x: 40, y: 460, rotate: 12, anchor: "right" },
     svg: headphonesSvg,
   },
   {
     id: "star",
     label: "Star",
-    initial: { x: 40, y: 980, rotate: -4 },
+    initial: { x: 40, y: 980, rotate: -4, anchor: "left" },
     svg: starSvg,
   },
   {
     id: "heart",
     label: "Heart",
-    initial: { x: 80, y: 1320, rotate: 8 },
+    initial: { x: 60, y: 1320, rotate: 8, anchor: "right" },
     svg: heartSvg,
   },
   {
     id: "floppy",
     label: "Floppy disk",
-    initial: { x: 40, y: 1700, rotate: -12 },
+    initial: { x: 40, y: 1700, rotate: -12, anchor: "left" },
     svg: floppySvg,
   },
 ];
 
 type Pos = { x: number; y: number };
 
-export function DraggableStickers() {
-  const [positions, setPositions] = useState<Record<string, Pos>>(() => {
-    const initial: Record<string, Pos> = {};
-    STICKERS.forEach((s) => {
-      initial[s.id] = { x: s.initial.x, y: s.initial.y };
-    });
-    return initial;
+// Approx sticker width (must match the rendered size cap below).
+const STICKER_PX = 72;
+
+// SSR-safe seed: use raw initial.x for everyone so server and client first
+// render match. Right-anchored stickers get resolved against the viewport in
+// a post-mount effect below, which updates their x to `vw - STICKER_PX - x`.
+function seedPositions(): Record<string, Pos> {
+  const initial: Record<string, Pos> = {};
+  STICKERS.forEach((s) => {
+    initial[s.id] = { x: s.initial.x, y: s.initial.y };
   });
+  return initial;
+}
+
+export function DraggableStickers() {
+  const [positions, setPositions] = useState<Record<string, Pos>>(seedPositions);
+  const anchoredRef = useRef(false);
+
+  useEffect(() => {
+    if (anchoredRef.current) return;
+    anchoredRef.current = true;
+    const vw = window.innerWidth;
+    setPositions((prev) => {
+      const next = { ...prev };
+      STICKERS.forEach((s) => {
+        if (s.initial.anchor === "right") {
+          next[s.id] = {
+            x: Math.max(0, vw - STICKER_PX - s.initial.x),
+            y: s.initial.y,
+          };
+        }
+      });
+      return next;
+    });
+  }, []);
   const [dragging, setDragging] = useState<string | null>(null);
   const dragRef = useRef<{
     id: string;

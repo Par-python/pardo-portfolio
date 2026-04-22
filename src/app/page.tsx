@@ -10,7 +10,7 @@ import { TerminalModal } from "@/components/TerminalModal";
 import { WindowFrame } from "@/components/WindowFrame";
 import { useLiveContent } from "@/lib/useLiveContent";
 
-type ModalKind = "contacts" | "tech" | "projectsPopup" | "terminal";
+type ModalKind = "contacts" | "tech" | "projectsPopup" | "terminal" | "projectDetail";
 
 type Project = {
   title: string;
@@ -75,6 +75,7 @@ export default function Home() {
     tech: BASE_Z,
     projectsPopup: BASE_Z,
     terminal: BASE_Z,
+    projectDetail: BASE_Z,
   });
   const [activeProjectIdx, setActiveProjectIdx] = useState<number | null>(null);
 
@@ -269,6 +270,8 @@ export default function Home() {
         }
         onClose={() => setActiveProjectIdx(null)}
         techIcons={TECH_ICONS}
+        zIndex={zOrder.projectDetail}
+        onFocus={() => bringToFront("projectDetail")}
       />
       <TerminalModal
         open={openModals.has("terminal")}
@@ -281,6 +284,7 @@ export default function Home() {
         onOpenProject={(idx) => {
           closeModal("terminal");
           setActiveProjectIdx(idx);
+          bringToFront("projectDetail");
         }}
         onOpenContacts={() => {
           closeModal("terminal");
