@@ -1,0 +1,48 @@
+{
+  "items": [
+    {
+      "label": "react",
+      "src": "/assets/tech/react.svg"
+    },
+    {
+      "label": "tailwind",
+      "src": "/assets/tech/tailwind.svg"
+    },
+    {
+      "label": "typescript",
+      "src": "/assets/tech/typescript.svg"
+    },
+    {
+      "label": "postgresql",
+      "src": "/assets/tech/postgresql.svg"
+    },
+    {
+      "label": "python",
+      "src": "/assets/tech/python.svg"
+    },
+    {
+      "label": "firebase",
+      "src": "/assets/tech/firebase.svg"
+    },
+    {
+      "label": "git",
+      "src": "/assets/tech/git.svg"
+    },
+    {
+      "label": "gcloud",
+      "src": "/assets/tech/gcloud.svg"
+    },
+    {
+      "label": "nodejs",
+      "src": "/assets/tech/nodejs.svg"
+    },
+    {
+      "label": "java",
+      "src": "/assets/tech/java.svg"
+    },
+    {
+      "label": "django",
+      "src": "/assets/tech/django.svg"
+    }
+  ]
+}

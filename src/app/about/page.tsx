@@ -150,7 +150,7 @@ function TypewriterText({
 }) {
   // Typewriter types the stripped (plain) text; once done, swap to rich JSX.
   const plain = stripRichText(text);
-  const { ref, display, done } = useTypewriter(plain);
+  const { ref, display, done } = useTypewriter(plain, { speedMs: 6 });
   return (
     <p
       ref={ref as React.RefObject<HTMLParagraphElement>}

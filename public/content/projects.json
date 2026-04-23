@@ -1,0 +1,80 @@
+{
+  "projects": [
+    {
+      "title": "Sim.ul",
+      "image": "/assets/projects/simula.png",
+      "description": "Cities are living experiments, but sim.ula believes the lab shouldn't be the streets themselves.",
+      "tech": [
+        "git",
+        "postgresql",
+        "tailwind",
+        "typescript"
+      ],
+      "link": "https://simula.cjuy.dev/",
+      "createdAt": "March 2026",
+      "team": [
+        "CharlesUy.PrinceRivera"
+      ],
+      "details": "**The Challenge: High-Stakes Urban Planning**\nIn highly dense urban environments, policy decisions cannot afford to be experimental. In regions where traffic congestion drains 3.5 billion pesos daily and population density reaches up to 40,000 people per square kilometer, building software just for the sake of building is a liability. Local government units need a way to validate interventions before deployment. A hallucinated or poorly translated recommendation in this environment doesn't just fail; it risks multi-million peso disasters.\n\n**The Solution: sim.ula**\nsim.ula is an AI-driven urban policy simulation platform designed to act as a rigorous testing ground—a lab for living cities. Born out of an intensive 24-hour hackathon and hours of deliberate, screen-off ideological framing, this platform provides city planners with scientifically grounded, scalable, and highly usable blueprints for high-stakes decision-making.\n\nInstead of rushing to write code, the foundation of sim.ula was built on ensuring real-world applicability. The system was piloted using a curated vector database of 94 city policy precedents from across Southeast Asia *(evaluating interventions from cities like Singapore and Jakarta)*, specifically tailored and contextualized for the unique infrastructural demands of Quezon City.\n\n**Technical Architecture**\nThe engineering architecture of sim.ula is built to guarantee precision, contextual relevance, and strict adherence to factual civic data:\n\n- GraphRAG with Bidirectional CTEs: Maps the complex, non-linear relationships between specific urban interventions and their cascading long-term socio-economic effects.\n\n- Transferability Chains: A custom logic layer that calculates the \"contextual distance\" between cities. This ensures that an infrastructure policy successful in Jakarta is rigorously evaluated for its actual applicability to a new target city before being recommended.\n\n- DeBERTa NLI Hallucination Guard: A strict validation layer designed specifically for the high-stakes nature of public policy, actively preventing AI hallucinations from entering the municipal decision-making pipeline.\n\n- Scalable Infrastructure: Engineered utilizing Ollama for efficient, localized model execution and routed through Cloudflare to ensure secure, low-latency access for end-users.\n\n**The Impact**\nAwarded 3rd Place Overall at its debuting hackathon (built alongside Charles Joshua Uy and Prince Rivera). Beyond the podium placement, sim.ula represents a fundamental shift in how civic technology should be built: prioritizing deep, analytical problem-solving and architectural integrity over rapid, blind coding. It is a scalable tool that successfully turns speculative \"what ifs\" into concrete, evidence-based municipal action."
+    },
+    {
+      "title": "One Big Match",
+      "image": "/assets/projects/one-big-match.png",
+      "description": "Breaking the ice in a sea of new faces shouldn’t be a matter of chance.",
+      "tech": [
+        "django",
+        "git",
+        "postgresql",
+        "nodejs",
+        "tailwind",
+        "typescript"
+      ],
+      "link": "https://onebigmatch.com/",
+      "details": "Blending elements of dating apps and party games, One Big Match is designed for event-based social connection. It takes the headache out of \"who should pair with who\" by smart-matching people based on common traits or vibes, sparking connections that feel natural from the very first hello.\n\n**The Problem**\nGatherings can easily fall flat without a natural way to break the ice. Whether organizing a networking mixer, a team-building session, or a club meetup, event planners need a tool to help people connect faster and with less awkwardness.\n\n**The Solution**\nWe handle the matching; you bring the people. OBM acts as a social algorithm built for groups, taking care of the pairing so organizers can focus purely on the experience.\n\n**Core Features**\nInterest & Character-Based Matching: Forms groups of people based on their shared interests and personality traits to host smoother-flowing conversations.\n\n- Customizable Host Controls: Hosts have full control to change the number of people per group and switch between randomized or similarity-based matching methods.\n\n- Frictionless Access: No downloads or logins required for attendees—they simply scan a QR code or tap a link to join the room.\n\n- Privacy by Design: Collects only essential information (name, email, and basic profile details). Users can update or delete their profiles and event history at any time.\n\n**How It Works**\nThe Attendee Experience: Users quickly sign up with Google, upload their snazziest picture, and complete a short personality quiz to let their personality shine.\n\nThe Host Experience: Hosts create an event, set the max participants, and share the room code. Once everyone is in, the host hits \"Start Matching,\" and the app takes care of the rest.",
+      "createdAt": "June 2025"
+    },
+    {
+      "title": "TedX",
+      "image": "/assets/projects/tedx.png",
+      "description": "Ideas worth spreading deserve a digital stage built to match their ambition.",
+      "tech": [
+        "tailwind",
+        "typescript",
+        "git",
+        "nodejs"
+      ],
+      "link": "https://tedxateneodemanilau.com/",
+      "details": "**Project Overview**\nDesigned and developed the official event website to translate the abstract theme of \"Momentum\" into an engaging, interactive digital experience for the Ateneo community. Serving as the central touchpoint for the 2026 conference, the platform guides visitors seamlessly from initial discovery down to final attendee registration.\n\n**Core Features**\n- Thematic UI/UX: Integrated the concept of \"Momentum\" through scroll-driven interactions that physically mirror the theme of movement.\n\n- Interactive Reveals: Built engaging \"open the doors\" interface elements to creatively introduce the speaker lineup.\n\n- Seamless Registration: Developed a frictionless, dynamic ticketing flow tailored to securely capture data for various participant tiers.\n\n- Centralized Hub: Housed all critical conference logistics in one accessible space, including responsive agendas, integrated venue mapping, and sponsor highlights.\n\n**The Impact**\nThe platform successfully anchored the digital footprint for the conference, transforming a complex onboarding process into a smooth user journey and delivering a premium, scalable web presence worthy of the TEDx brand.",
+      "createdAt": "April 2026"
+    },
+    {
+      "title": "Sigla",
+      "image": "/assets/projects/s1napse.png",
+      "description": "The first step of every Atenean’s journey begins long before they set foot on campus;it starts with a single click. ",
+      "tech": [
+        "git",
+        "postgresql",
+        "tailwind",
+        "python",
+        "firebase",
+        "typescript",
+        "django"
+      ],
+      "link": "https://admuorsem.com/",
+      "details": "Developed a web-based utility that transforms standard, text-heavy college class schedules into clean, customized mobile and desktop wallpapers. Designed specifically for students, this tool eliminates the friction of constantly logging into academic portals or digging through photo galleries just to check the time and room number for their next class.\n\n**Core Features**\n- Dynamic Grid Layouts: Automatically parses inputted class data (subject, time, room, professor) and seamlessly organizes it into an optimized, highly readable visual grid.\n\n- Aesthetic Customization: Allows users to personalize their generated schedules with custom color palettes, background images, and typography to match their specific vibe.\n\n- Instant High-Res Export: Utilizes client-side rendering to instantly convert the schedule layout into a high-resolution PNG/JPEG file, perfectly scaled for modern mobile lock screens or desktop displays.\n\n- Frictionless UI: Built with an intuitive, no-clutter interface that makes data entry, customization, and downloading a fast, one-stop process.\n\n**The Impact**\nTransformed a mundane administrative necessity into a practical, visually pleasing design experience. The generator provides students with a fast, reliable, and highly personalized way to keep their daily academic routines accessible right from their lock screens.",
+      "createdAt": "August 2025"
+    },
+    {
+      "title": "S1napse",
+      "image": "/assets/projects/s1napse-popup.png",
+      "description": "Built to see my own ACC laps, S1napse grew into a full sim + real-racing telemetry suite — self-building track maps, per-corner coaching, and an ELM327 bridge that brings the same tools to a real car.",
+      "tech": [
+        "git",
+        "postgresql",
+        "python"
+      ],
+      "createdAt": "November 2025",
+      "details": "to be written :)"
+    }
+  ]
+}
