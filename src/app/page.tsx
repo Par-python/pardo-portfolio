@@ -401,7 +401,7 @@ export default function Home() {
                 <img
                   src="/assets/linkedin-pixel.svg"
                   alt="LinkedIn"
-                  className="!w-full !h-full object-contain [image-rendering:pixelated]"
+                  className="w-full! h-full! object-contain [image-rendering:pixelated]"
                   width={32}
                   height={32}
                 />
@@ -415,7 +415,7 @@ export default function Home() {
                 <img
                   src="/assets/github-pixel.svg"
                   alt="GitHub"
-                  className="!w-full !h-full object-contain [image-rendering:pixelated]"
+                  className="w-full! h-full! object-contain [image-rendering:pixelated]"
                   width={32}
                   height={32}
                 />
@@ -427,7 +427,21 @@ export default function Home() {
                 <img
                   src="/assets/email-pixel.svg"
                   alt="Email"
-                  className="!w-full !h-full object-contain [image-rendering:pixelated]"
+                  className="w-full! h-full! object-contain [image-rendering:pixelated]"
+                  width={32}
+                  height={32}
+                />
+              </a>
+              <a
+                href="https://cv.jjpardo.com/cv.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block size-[44px] sm:size-[32px] hover:opacity-80"
+              >
+                <img
+                  src="/assets/resume-pixel.svg"
+                  alt="Resume"
+                  className="w-full! h-full! object-contain [image-rendering:pixelated]"
                   width={32}
                   height={32}
                 />

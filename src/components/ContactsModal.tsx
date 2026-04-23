@@ -71,12 +71,12 @@ export function ContactsModal({
                 CONTACTS
               </p>
               <a
-                href={contacts.linkedin}
+                href="https://cv.jjpardo.com/cv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-vt323 text-[#26903d] text-[16px] sm:text-[20px] tracking-[0.32px] underline leading-[18px] sm:leading-[20px]"
               >
-                connect with me :)
+                view my resume
               </a>
             </div>
 
