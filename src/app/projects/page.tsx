@@ -219,7 +219,7 @@ export default function ProjectsPage() {
               <WindowFrame
                 title={project.title}
                 statusText="8 object(s)"
-                className="h-[280px] sm:h-[320px] lg:h-[360px]"
+                className="min-h-[320px] sm:h-[320px] lg:h-[360px]"
               >
                 <div className="flex flex-col gap-3 sm:gap-4 h-full min-h-0">
                   <div className="w-full h-[110px] sm:h-[130px] lg:h-[150px] border border-black/20 overflow-hidden bg-[#f4f4f4] shrink-0">
@@ -231,7 +231,7 @@ export default function ProjectsPage() {
                       />
                     ) : null}
                   </div>
-                  <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px] flex-1 min-h-0 overflow-y-auto">
+                  <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px] line-clamp-3 sm:line-clamp-none sm:flex-1 sm:min-h-0 sm:overflow-y-auto">
                     {renderRichText(project.description)}
                   </p>
                   {project.tech && project.tech.length > 0 ? (
