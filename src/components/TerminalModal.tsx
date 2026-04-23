@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { stripRichText } from "@/lib/richText";
+import { useDraggableWindow } from "@/lib/useDraggableWindow";
 import { WindowFrame } from "./WindowFrame";
 
 type Project = {
@@ -72,14 +73,10 @@ export function TerminalModal({
   onOpenContacts,
   onOpenTechStack,
 }: TerminalModalProps) {
-  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
-  const dragRef = useRef<{
-    startX: number;
-    startY: number;
-    origX: number;
-    origY: number;
-  } | null>(null);
-  const windowRef = useRef<HTMLDivElement>(null);
+  const { pos, windowRef, onTitlePointerDown } = useDraggableWindow({
+    open,
+    minTop: 24,
+  });
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -94,20 +91,6 @@ export function TerminalModal({
   const [lastHits, setLastHits] = useState<SearchHit[]>([]);
 
   useEffect(() => {
-    if (open && pos === null && windowRef.current) {
-      const rect = windowRef.current.getBoundingClientRect();
-      setPos({
-        x: window.innerWidth / 2 - rect.width / 2,
-        y: Math.max(24, window.innerHeight / 2 - rect.height / 2),
-      });
-    }
-  }, [open, pos]);
-
-  useEffect(() => {
-    if (!open) setPos(null);
-  }, [open]);
-
-  useEffect(() => {
     if (open) {
       const t = setTimeout(() => inputRef.current?.focus(), 50);
       return () => clearTimeout(t);
@@ -119,37 +102,6 @@ export function TerminalModal({
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [lines]);
-
-  const onTitleMouseDown = (e: React.MouseEvent) => {
-    if (!pos) return;
-    dragRef.current = {
-      startX: e.clientX,
-      startY: e.clientY,
-      origX: pos.x,
-      origY: pos.y,
-    };
-    const onMove = (ev: MouseEvent) => {
-      if (!dragRef.current || !windowRef.current) return;
-      const rect = windowRef.current.getBoundingClientRect();
-      const nextX =
-        dragRef.current.origX + (ev.clientX - dragRef.current.startX);
-      const nextY =
-        dragRef.current.origY + (ev.clientY - dragRef.current.startY);
-      const halfW = rect.width / 2;
-      const halfH = rect.height / 2;
-      setPos({
-        x: Math.min(Math.max(nextX, -halfW), window.innerWidth - halfW),
-        y: Math.min(Math.max(nextY, -halfH), window.innerHeight - halfH),
-      });
-    };
-    const onUp = () => {
-      dragRef.current = null;
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-    };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-  };
 
   const index = useMemo(() => {
     const items: SearchHit[] = [];
@@ -364,7 +316,7 @@ export function TerminalModal({
   return (
     <div
       ref={windowRef}
-      onMouseDownCapture={onFocus}
+      onPointerDownCapture={onFocus}
       className="fixed w-[min(720px,92vw)]"
       style={{
         left: pos?.x ?? 0,
@@ -373,7 +325,11 @@ export function TerminalModal({
         visibility: pos ? "visible" : "hidden",
       }}
     >
-      <div onMouseDown={onTitleMouseDown} className="cursor-move">
+      <div
+        onPointerDown={onTitlePointerDown}
+        className="cursor-move touch-none"
+        style={{ touchAction: "none" }}
+      >
         <WindowFrame
           title="TERMINAL"
           titleBarColor="#000000"

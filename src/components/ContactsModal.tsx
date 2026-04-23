@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { useLiveContent } from "@/lib/useLiveContent";
+import { useDraggableWindow } from "@/lib/useDraggableWindow";
 import { WindowFrame } from "./WindowFrame";
 
 type ContactsContent = {
@@ -32,63 +32,14 @@ export function ContactsModal({
   onFocus,
 }: ContactsModalProps) {
   const contacts = useLiveContent<ContactsContent>("contacts", CONTACTS_FALLBACK);
-  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
-  const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
-  const windowRef = useRef<HTMLDivElement>(null);
-
-  // Center on open
-  useEffect(() => {
-    if (open && pos === null && windowRef.current) {
-      const rect = windowRef.current.getBoundingClientRect();
-      setPos({
-        x: window.innerWidth / 2 - rect.width / 2,
-        y: window.innerHeight / 2 - rect.height / 2,
-      });
-    }
-  }, [open, pos]);
-
-  // Reset position when closed so it recenters next time
-  useEffect(() => {
-    if (!open) setPos(null);
-  }, [open]);
-
-  const onTitleMouseDown = (e: React.MouseEvent) => {
-    if (!pos) return;
-    dragRef.current = {
-      startX: e.clientX,
-      startY: e.clientY,
-      origX: pos.x,
-      origY: pos.y,
-    };
-    const onMove = (ev: MouseEvent) => {
-      if (!dragRef.current || !windowRef.current) return;
-      const rect = windowRef.current.getBoundingClientRect();
-      const nextX =
-        dragRef.current.origX + (ev.clientX - dragRef.current.startX);
-      const nextY =
-        dragRef.current.origY + (ev.clientY - dragRef.current.startY);
-      const halfW = rect.width / 2;
-      const halfH = rect.height / 2;
-      setPos({
-        x: Math.min(Math.max(nextX, -halfW), window.innerWidth - halfW),
-        y: Math.min(Math.max(nextY, -halfH), window.innerHeight - halfH),
-      });
-    };
-    const onUp = () => {
-      dragRef.current = null;
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-    };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-  };
+  const { pos, windowRef, onTitlePointerDown } = useDraggableWindow({ open });
 
   if (!open) return null;
 
   return (
     <div
       ref={windowRef}
-      onMouseDownCapture={onFocus}
+      onPointerDownCapture={onFocus}
       className="fixed w-[min(675px,92vw)]"
       style={{
         left: pos?.x ?? 0,
@@ -97,7 +48,11 @@ export function ContactsModal({
         visibility: pos ? "visible" : "hidden",
       }}
     >
-      <div onMouseDown={onTitleMouseDown} className="cursor-move">
+      <div
+        onPointerDown={onTitlePointerDown}
+        className="cursor-move touch-none"
+        style={{ touchAction: "none" }}
+      >
         <WindowFrame
           title="CONTACTS"
           titleBarColor="#26903d"
