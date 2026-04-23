@@ -15,6 +15,18 @@ export function BootLoader() {
   const [hidden, setHidden] = useState(false);
   const [gone, setGone] = useState(false);
   const timersRef = useRef<number[]>([]);
+  const startedRef = useRef(false);
+
+  const startTimers = () => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    const hideAt = window.setTimeout(() => setHidden(true), GIF_LOOP_MS);
+    const goneAt = window.setTimeout(
+      () => setGone(true),
+      GIF_LOOP_MS + FADE_MS
+    );
+    timersRef.current.push(hideAt, goneAt);
+  };
 
   useEffect(() => {
     if (sessionStorage.getItem(BOOT_KEY)) {
@@ -23,23 +35,17 @@ export function BootLoader() {
       return;
     }
     sessionStorage.setItem(BOOT_KEY, "1");
+
+    // Safety net: even if <img> onLoad never fires (cached image, decode skip),
+    // the loader must still unmount. Start timers right after mount so the
+    // worst case is the same as if the image loaded instantly.
+    startTimers();
+
     return () => {
       timersRef.current.forEach((id) => window.clearTimeout(id));
       timersRef.current = [];
     };
   }, []);
-
-  // Fire the hide + unmount timers only after the gif's <img> has loaded,
-  // so slow networks don't cut the loop short.
-  const onImgLoad = () => {
-    if (timersRef.current.length > 0) return;
-    const hideAt = window.setTimeout(() => setHidden(true), GIF_LOOP_MS);
-    const goneAt = window.setTimeout(
-      () => setGone(true),
-      GIF_LOOP_MS + FADE_MS
-    );
-    timersRef.current.push(hideAt, goneAt);
-  };
 
   if (gone || !shouldShow) return null;
 
@@ -52,7 +58,6 @@ export function BootLoader() {
       <img
         src="/assets/loading.gif"
         alt="Loading"
-        onLoad={onImgLoad}
         className="w-[clamp(200px,30vw,400px)] h-auto [image-rendering:pixelated]"
       />
     </div>
