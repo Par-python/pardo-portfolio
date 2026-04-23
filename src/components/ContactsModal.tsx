@@ -159,7 +159,7 @@ export function ContactsModal({
                   href={contacts.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block size-[32px] hover:opacity-80"
+                  className="block size-[44px] sm:size-[32px] hover:opacity-80"
                 >
                   <img
                     src="/assets/linkedin-pixel.svg"
@@ -171,7 +171,7 @@ export function ContactsModal({
                   href={contacts.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block size-[32px] hover:opacity-80"
+                  className="block size-[44px] sm:size-[32px] hover:opacity-80"
                 >
                   <img
                     src="/assets/github-pixel.svg"
@@ -181,7 +181,7 @@ export function ContactsModal({
                 </a>
                 <a
                   href={`mailto:${contacts.email}`}
-                  className="block size-[32px] hover:opacity-80"
+                  className="block size-[44px] sm:size-[32px] hover:opacity-80"
                 >
                   <img
                     src="/assets/email-pixel.svg"

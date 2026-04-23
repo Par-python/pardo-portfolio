@@ -85,7 +85,7 @@ export default function AboutPage() {
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap"
+                    className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap py-2"
                   >
                     {link.label}
                   </Link>
@@ -94,7 +94,7 @@ export default function AboutPage() {
                     key={link.label}
                     type="button"
                     onClick={link.onClick}
-                    className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap cursor-pointer bg-transparent border-0 p-0"
+                    className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap cursor-pointer bg-transparent border-0 py-2"
                   >
                     {link.label}
                   </button>

@@ -396,7 +396,7 @@ export default function Home() {
                 href={contactsContent.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block size-[28px] sm:size-[32px] hover:opacity-80"
+                className="block size-[44px] sm:size-[32px] hover:opacity-80"
               >
                 <img
                   src="/assets/linkedin-pixel.svg"
@@ -410,7 +410,7 @@ export default function Home() {
                 href={contactsContent.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block size-[28px] sm:size-[32px] hover:opacity-80"
+                className="block size-[44px] sm:size-[32px] hover:opacity-80"
               >
                 <img
                   src="/assets/github-pixel.svg"
@@ -422,7 +422,7 @@ export default function Home() {
               </a>
               <a
                 href={`mailto:${contactsContent.email}`}
-                className="block size-[28px] sm:size-[32px] hover:opacity-80"
+                className="block size-[44px] sm:size-[32px] hover:opacity-80"
               >
                 <img
                   src="/assets/email-pixel.svg"

@@ -55,7 +55,7 @@ function Titlebar({
           {title}
         </span>
       </div>
-      <div className="flex items-center gap-[2px]">
+      <div className="flex items-center gap-[2px] sm:gap-[2px]">
         <WindowButton icon="minimize" />
         <WindowButton icon="maximize" />
         <WindowButton icon="close" onClick={onClose} />
@@ -77,16 +77,16 @@ function WindowButton({
       type={onClick ? "button" : undefined}
       onClick={onClick}
       onMouseDown={(e) => e.stopPropagation()}
-      className="relative size-[16px] bg-[#c0c0c0] win-frame-outside flex items-center justify-center cursor-pointer"
+      className="relative size-[28px] sm:size-[16px] bg-[#c0c0c0] win-frame-outside flex items-center justify-center cursor-pointer"
     >
       {icon === "minimize" && (
-        <div className="absolute bottom-[3px] left-1/2 -translate-x-1/2 w-[6px] h-[2px] bg-black" />
+        <div className="absolute bottom-[6px] sm:bottom-[3px] left-1/2 -translate-x-1/2 w-[10px] sm:w-[6px] h-[3px] sm:h-[2px] bg-black" />
       )}
       {icon === "maximize" && (
-        <div className="absolute top-[3px] left-1/2 -translate-x-1/2 size-[8px] border border-black border-t-2" />
+        <div className="absolute top-[6px] sm:top-[3px] left-1/2 -translate-x-1/2 size-[14px] sm:size-[8px] border border-black border-t-2" />
       )}
       {icon === "close" && (
-        <span className="text-black text-[10px] leading-none font-bold font-mono">
+        <span className="text-black text-[18px] sm:text-[10px] leading-none font-bold font-mono">
           ×
         </span>
       )}

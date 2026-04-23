@@ -263,7 +263,7 @@ export function TipsModal({ open, onClose }: TipsModalProps) {
                   type="button"
                   onClick={() => setStep((s) => Math.max(0, s - 1))}
                   disabled={step === 0}
-                  className="px-3 py-1 bg-[#c0c0c0] win-frame-outside text-[14px] tracking-[0.28px] disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                  className="px-4 py-2 bg-[#c0c0c0] win-frame-outside text-[14px] tracking-[0.28px] disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                 >
                   ← prev
                 </button>
@@ -271,7 +271,7 @@ export function TipsModal({ open, onClose }: TipsModalProps) {
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-3 py-1 bg-[#c0c0c0] win-frame-outside text-[14px] tracking-[0.28px] cursor-pointer"
+                    className="px-4 py-2 bg-[#c0c0c0] win-frame-outside text-[14px] tracking-[0.28px] cursor-pointer"
                   >
                     got it!
                   </button>
@@ -279,7 +279,7 @@ export function TipsModal({ open, onClose }: TipsModalProps) {
                   <button
                     type="button"
                     onClick={() => setStep((s) => Math.min(tips.length - 1, s + 1))}
-                    className="px-3 py-1 bg-[#c0c0c0] win-frame-outside text-[14px] tracking-[0.28px] cursor-pointer"
+                    className="px-4 py-2 bg-[#c0c0c0] win-frame-outside text-[14px] tracking-[0.28px] cursor-pointer"
                   >
                     next →
                   </button>
