@@ -2,17 +2,25 @@
   "featured": [
     {
       "kind": "news",
-      "title": "BLUEHACKS 2026",
-      "image": "/assets/news/bluehacks2026.jpeg",
-      "description": "Cities are living experiments, but sim.ula believes the lab shouldn't be the streets themselves. By winning 3rd place overall at BlueHacks 2026, this AI-driven tool is proving that advanced engineering can simulate the future of urban policy before a single peso is ever spent.",
-      "date": "March 2026",
-      "link": "https://simula.cjuy.dev/"
+      "title": "bigfiles ",
+      "image": "/assets/news/bigfiles.png",
+      "description": "Find the big files, old files, and duplicates clogging your computer and reclaim gigabytes you forgot you had.",
+      "date": "May 12",
+      "link": "https://github.com/Par-python/bigfiles"
     },
     {
       "kind": "project",
       "title": "[CURRENTLY BUILDING] S1NAPSE",
       "image": "/assets/projects/s1napse-popup.png",
       "description": "Built to see my own ACC laps, S1napse grew into a full sim + real-racing telemetry suite — self-building track maps, per-corner coaching, and an ELM327 bridge that brings the same tools to a real car."
+    },
+    {
+      "kind": "news",
+      "title": "BLUEHACKS 2026",
+      "image": "/assets/news/bluehacks2026.jpeg",
+      "description": "Cities are living experiments, but sim.ula believes the lab shouldn't be the streets themselves. By winning 3rd place overall at BlueHacks 2026, this AI-driven tool is proving that advanced engineering can simulate the future of urban policy before a single peso is ever spent.",
+      "date": "March 2026",
+      "link": "https://simula.cjuy.dev/"
     }
   ]
 }
