@@ -3,7 +3,7 @@
     {
       "kind": "news",
       "title": "bigfiles ",
-      "image": "/assets/news/bigfiles.png",
+      "image": "/assets/news/bigfiles-1.png",
       "description": "Find the big files, old files, and duplicates clogging your computer and reclaim gigabytes you forgot you had.",
       "date": "May 12",
       "link": "https://github.com/Par-python/bigfiles"
