@@ -28,12 +28,15 @@ const TECH_ICONS: Record<string, string> = {
   typescript: "/assets/tech/typescript.svg",
   postgresql: "/assets/tech/postgresql.svg",
   python: "/assets/tech/python.svg",
-  firebase: "/assets/tech/firebase.svg",
+  cloudflare: "/assets/tech/cloudflare.svg",
   git: "/assets/tech/git.svg",
   gcloud: "/assets/tech/gcloud.svg",
   nodejs: "/assets/tech/nodejs.svg",
   java: "/assets/tech/java.svg",
   django: "/assets/tech/django.svg",
+  rust: "/assets/tech/rust.svg",
+  android: "/assets/tech/androidstudio-svgrepo-com.svg",
+  swift: "/assets/tech/swift-svgrepo-com.svg",
 };
 
 const FALLBACK: ProjectsContent = { projects: [
@@ -49,7 +52,7 @@ const FALLBACK: ProjectsContent = { projects: [
     image: "/assets/projects/s1napse.png",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus mi, mattis quis rutrum eget, mattis mattis arcu. Mauris eleifend risus sit amet orci mollis, at iaculis nulla fringilla.",
-    tech: ["react", "typescript", "firebase", "tailwind"],
+    tech: ["react", "typescript", "cloudflare", "tailwind"],
   },
   {
     title: "S1napse",

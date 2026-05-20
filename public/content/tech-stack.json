@@ -21,8 +21,8 @@
       "src": "/assets/tech/python.svg"
     },
     {
-      "label": "firebase",
-      "src": "/assets/tech/firebase.svg"
+      "label": "cloudflare",
+      "src": "/assets/tech/cloudflare.svg"
     },
     {
       "label": "git",
@@ -43,6 +43,18 @@
     {
       "label": "django",
       "src": "/assets/tech/django.svg"
+    },
+    {
+      "label": "rust",
+      "src": "/assets/tech/rust.svg"
+    },
+    {
+      "label": "android",
+      "src": "/assets/tech/androidstudio-svgrepo-com.svg"
+    },
+    {
+      "label": "swift",
+      "src": "/assets/tech/swift-svgrepo-com.svg"
     }
   ]
 }

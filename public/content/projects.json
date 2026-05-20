@@ -1,6 +1,31 @@
 {
   "projects": [
     {
+      "title": "S1napse",
+      "image": "/assets/projects/s1napse.png",
+      "description": "Built to see my own ACC laps, S1napse grew into a full sim + real-racing telemetry suite — self-building track maps, per-corner coaching, and an ELM327 bridge that brings the same tools to a real car.",
+      "tech": [
+        "git",
+        "python"
+      ],
+      "createdAt": "November 2025",
+      "details": "**I'm a sim racer**, and every telemetry tool I tried was either locked behind a subscription, tied to one specific sim, or so cluttered I couldn't actually read it mid-lap. The ones that worked for ACC didn't work for iRacing, nothing touched real cars, and the analysis tools were either too shallow or built for engineers, not drivers. So I built the thing I actually wanted to use.\n\n**S1napse is a Python desktop app** (PySide6) that talks to six different telemetry sources behind one unified reader interface: ACC, AC, iRacing, Le Mans Ultimate, and rFactor 2 over shared memory or UDP, plus real cars through an ELM327 OBD-II adapter. On top of that sits a math channel engine with its own formula parser, a corner detector and trail-braking analyzer that generates coaching insights after each session, a tyre and strategy module, and a track map that builds itself from the laps you drive. Ten tabs in total, split between dense live HUDs you can read at 200 km/h and roomier analysis views for after the session.\n\nI designed and shipped the whole thing end to end, from the protocol-level readers up through the UI system, packaging, and a Windows installer. **It's free, actively developed, and the people using it are people like me.**\n\nStack: Python, PySide6/Qt, NumPy, shared memory + UDP, PyInstaller.",
+      "link": "https://s1napse.jjpardo.com/"
+    },
+    {
+      "title": "bigfiles",
+      "image": "/assets/news/bigfiles-1.png",
+      "description": "Find the big files, old files, and duplicates clogging your computer and reclaim gigabytes you forgot you had.",
+      "details": "**The problem.** Every few months my laptop fills up and I have no idea why. Finder's \"Storage\" tab gives vague categories. du spits out walls of numbers. The GUI cleaners want a subscription to tell me my Downloads folder is big. None of them answer the actual question: what's taking up space, and is it safe to delete?\n\n**How it started.** I was 12GB from full, again, and decided to just build the tool I wanted. Something that scans fast, groups files by what they actually are (videos, installers, caches, old downloads), flags stuff I haven't touched in years, and catches the duplicate copies I keep making of the same folder. No GUI, no subscription, no telemetry — just a clear answer in one command.\n\n**The result. **bigfiles scans my entire home directory in seconds, shows me exactly where the weight is, surfaces duplicates I didn't know I had, and lets me clean them up interactively without ever leaving the terminal. The first time I ran it on my own machine, it found 40GB of forgotten video exports and duplicate project folders. I've shipped it to crates.io so anyone else who's tired of guessing can use it too.\n\n",
+      "tech": [
+        "git",
+        "rust"
+      ],
+      "link": "https://github.com/Par-python/bigfiles",
+      "createdAt": "May 11",
+      "team": []
+    },
+    {
       "title": "Sim.ula",
       "image": "/assets/projects/simula.png",
       "description": "Cities are living experiments, but sim.ula believes the lab shouldn't be the streets themselves.",
@@ -49,7 +74,7 @@
     },
     {
       "title": "Sigla",
-      "image": "/assets/projects/s1napse.png",
+      "image": "/assets/projects/sigla.png",
       "description": "The first step of every Atenean’s journey begins long before they set foot on campus;it starts with a single click. ",
       "tech": [
         "git",
@@ -63,30 +88,6 @@
       "link": "https://admuorsem.com/",
       "details": "Developed a web-based utility that transforms standard, text-heavy college class schedules into clean, customized mobile and desktop wallpapers. Designed specifically for students, this tool eliminates the friction of constantly logging into academic portals or digging through photo galleries just to check the time and room number for their next class.\n\n**Core Features**\n- Dynamic Grid Layouts: Automatically parses inputted class data (subject, time, room, professor) and seamlessly organizes it into an optimized, highly readable visual grid.\n\n- Aesthetic Customization: Allows users to personalize their generated schedules with custom color palettes, background images, and typography to match their specific vibe.\n\n- Instant High-Res Export: Utilizes client-side rendering to instantly convert the schedule layout into a high-resolution PNG/JPEG file, perfectly scaled for modern mobile lock screens or desktop displays.\n\n- Frictionless UI: Built with an intuitive, no-clutter interface that makes data entry, customization, and downloading a fast, one-stop process.\n\n**The Impact**\nTransformed a mundane administrative necessity into a practical, visually pleasing design experience. The generator provides students with a fast, reliable, and highly personalized way to keep their daily academic routines accessible right from their lock screens.",
       "createdAt": "August 2025"
-    },
-    {
-      "title": "S1napse",
-      "image": "/assets/projects/s1napse-popup.png",
-      "description": "Built to see my own ACC laps, S1napse grew into a full sim + real-racing telemetry suite — self-building track maps, per-corner coaching, and an ELM327 bridge that brings the same tools to a real car.",
-      "tech": [
-        "git",
-        "postgresql",
-        "python"
-      ],
-      "createdAt": "November 2025",
-      "details": "to be written :)"
-    },
-    {
-      "title": "bigfiles",
-      "image": "/assets/news/bigfiles-1.png",
-      "description": "Find the big files, old files, and duplicates clogging your computer and reclaim gigabytes you forgot you had.",
-      "details": "**The problem.** Every few months my laptop fills up and I have no idea why. Finder's \"Storage\" tab gives vague categories. du spits out walls of numbers. The GUI cleaners want a subscription to tell me my Downloads folder is big. None of them answer the actual question: what's taking up space, and is it safe to delete?\n\n**How it started.** I was 12GB from full, again, and decided to just build the tool I wanted. Something that scans fast, groups files by what they actually are (videos, installers, caches, old downloads), flags stuff I haven't touched in years, and catches the duplicate copies I keep making of the same folder. No GUI, no subscription, no telemetry — just a clear answer in one command.\n\n**The result. **bigfiles scans my entire home directory in seconds, shows me exactly where the weight is, surfaces duplicates I didn't know I had, and lets me clean them up interactively without ever leaving the terminal. The first time I ran it on my own machine, it found 40GB of forgotten video exports and duplicate project folders. I've shipped it to crates.io so anyone else who's tired of guessing can use it too.\n\n",
-      "tech": [
-        "git"
-      ],
-      "link": "https://github.com/Par-python/bigfiles",
-      "createdAt": "May 11",
-      "team": []
     }
   ]
 }

@@ -2,17 +2,19 @@
   "featured": [
     {
       "kind": "news",
-      "title": "bigfiles ",
-      "image": "/assets/news/bigfiles-1.png",
-      "description": "Find the big files, old files, and duplicates clogging your computer and reclaim gigabytes you forgot you had.",
-      "date": "May 12",
-      "link": "https://github.com/Par-python/bigfiles"
+      "title": "[BETA RELEASE] S1NAPSE",
+      "image": "/assets/projects/s1napse.png",
+      "description": "A real-time telemetry and coaching dashboard that speaks to five racing sims and your actual car through one unified interface, built by a sim racer who got tired of paying for tools that only worked half the time.",
+      "date": "May 16",
+      "link": "https://s1napse.jjpardo.com/"
     },
     {
-      "kind": "project",
-      "title": "[CURRENTLY BUILDING] S1NAPSE",
-      "image": "/assets/projects/s1napse-popup.png",
-      "description": "Built to see my own ACC laps, S1napse grew into a full sim + real-racing telemetry suite — self-building track maps, per-corner coaching, and an ELM327 bridge that brings the same tools to a real car."
+      "kind": "news",
+      "title": "bigfiles ",
+      "image": "/assets/news/bigfiles-1.png",
+      "description": "Find the big files, old files, and duplicates clogging your computer and reclaim gigabytes you forgot you had.\n110 downloads and 8 stars on Github",
+      "date": "May 12",
+      "link": "https://github.com/Par-python/bigfiles"
     },
     {
       "kind": "news",

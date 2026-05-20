@@ -20,12 +20,15 @@ const FALLBACK: TechStackContent = { items: [
   { label: "typescript", src: "/assets/tech/typescript.svg" },
   { label: "postgresql", src: "/assets/tech/postgresql.svg" },
   { label: "python", src: "/assets/tech/python.svg" },
-  { label: "firebase", src: "/assets/tech/firebase.svg" },
+  { label: "cloudflare", src: "/assets/tech/cloudflare.svg" },
   { label: "git", src: "/assets/tech/git.svg" },
   { label: "gcloud", src: "/assets/tech/gcloud.svg" },
   { label: "nodejs", src: "/assets/tech/nodejs.svg" },
   { label: "java", src: "/assets/tech/java.svg" },
   { label: "django", src: "/assets/tech/django.svg" },
+  { label: "rust", src: "/assets/tech/rust.svg" },
+  { label: "android", src: "/assets/tech/androidstudio-svgrepo-com.svg" },
+  { label: "swift", src: "/assets/tech/swift-svgrepo-com.svg" },
 ] };
 
 export function TechStackModal({
