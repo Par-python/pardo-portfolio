@@ -46,3 +46,13 @@ next-env.d.ts
 /src/app/api/admin/
 /src/lib/admin-content.ts
 /docs/superpowers/plans/2026-04-21-admin-panel.md
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+
+!.env.example
