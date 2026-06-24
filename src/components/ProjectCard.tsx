@@ -81,7 +81,7 @@ export function ProjectCard({
         statusText={project.createdAt ?? "double-click to open"}
         className={
           featured
-            ? "h-full min-h-[300px]"
+            ? "h-full min-h-[300px] md:h-[420px]"
             : "h-full min-h-[300px] sm:h-[320px] lg:h-[360px]"
         }
       >
@@ -111,15 +111,25 @@ export function ProjectCard({
 
           {/* Body */}
           <div className="flex flex-col gap-3 min-h-0 flex-1">
-            <p
-              className={
-                featured
-                  ? "font-vt323 text-[17px] sm:text-[19px] tracking-[0.32px] leading-[21px] sm:leading-[24px] line-clamp-5 md:line-clamp-none md:flex-1 md:min-h-0 md:overflow-y-auto"
-                  : "font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px] line-clamp-3 sm:line-clamp-none sm:flex-1 sm:min-h-0 sm:overflow-y-auto"
-              }
-            >
-              {renderRichText(project.description)}
-            </p>
+            {featured ? (
+              // Featured: show the full details story, fading to the card
+              // background where it overflows (rather than scrolling or cutting).
+              <p
+                className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[20px] sm:leading-[23px] whitespace-pre-line flex-1 min-h-0 overflow-hidden"
+                style={{
+                  WebkitMaskImage:
+                    "linear-gradient(to bottom, #000 calc(100% - 44px), transparent 100%)",
+                  maskImage:
+                    "linear-gradient(to bottom, #000 calc(100% - 44px), transparent 100%)",
+                }}
+              >
+                {renderRichText(project.details ?? project.description)}
+              </p>
+            ) : (
+              <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px] line-clamp-3 sm:line-clamp-none sm:flex-1 sm:min-h-0 sm:overflow-y-auto">
+                {renderRichText(project.description)}
+              </p>
+            )}
 
             {/* Tech stack row */}
             {tech.length > 0 ? (
