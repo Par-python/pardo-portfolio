@@ -2,11 +2,11 @@
   "featured": [
     {
       "kind": "news",
-      "title": "[BETA RELEASE] S1NAPSE",
-      "image": "/assets/projects/s1napse.png",
-      "description": "A real-time telemetry and coaching dashboard that speaks to five racing sims and your actual car through one unified interface, built by a sim racer who got tired of paying for tools that only worked half the time.",
-      "date": "May 16",
-      "link": "https://s1napse.jjpardo.com/"
+      "title": "entroscope",
+      "image": "/assets/projects/entroscope-org.png",
+      "description": "The definitive entropy toolkit for time series data — seven entropy measures behind one consistent interface that works directly on pandas Series and numpy arrays.",
+      "date": "May 2026",
+      "link": "https://github.com/Par-python/entroscope"
     },
     {
       "kind": "news",
