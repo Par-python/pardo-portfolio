@@ -88,7 +88,7 @@ export function ProjectCard({
         className={
           featured
             ? "h-full min-h-[300px] md:h-[420px]"
-            : "h-full min-h-[300px] sm:h-[320px] lg:h-[360px]"
+            : "h-full min-h-[360px] sm:h-[400px] lg:h-[440px]"
         }
       >
         <div
