@@ -112,10 +112,11 @@ export function ProjectCard({
           {/* Body */}
           <div className="flex flex-col gap-3 min-h-0 flex-1">
             {featured ? (
-              // Featured: show the full details story, fading to the card
-              // background where it overflows (rather than scrolling or cutting).
-              <p
-                className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[20px] sm:leading-[23px] whitespace-pre-line flex-1 min-h-0 overflow-hidden"
+              // Featured: lead with the short description, then the full details
+              // story below it — fading to the card background where it overflows
+              // (rather than scrolling or cutting).
+              <div
+                className="flex-1 min-h-0 overflow-hidden"
                 style={{
                   WebkitMaskImage:
                     "linear-gradient(to bottom, #000 calc(100% - 44px), transparent 100%)",
@@ -123,8 +124,15 @@ export function ProjectCard({
                     "linear-gradient(to bottom, #000 calc(100% - 44px), transparent 100%)",
                 }}
               >
-                {renderRichText(project.details ?? project.description)}
-              </p>
+                <p className="font-vt323 text-[17px] sm:text-[19px] tracking-[0.32px] leading-[21px] sm:leading-[24px]">
+                  {renderRichText(project.description)}
+                </p>
+                {project.details ? (
+                  <p className="mt-3 font-vt323 text-[15px] sm:text-[17px] tracking-[0.32px] leading-[19px] sm:leading-[22px] text-black/80 whitespace-pre-line">
+                    {renderRichText(project.details)}
+                  </p>
+                ) : null}
+              </div>
             ) : (
               <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px] line-clamp-3 sm:line-clamp-none sm:flex-1 sm:min-h-0 sm:overflow-y-auto">
                 {renderRichText(project.description)}
