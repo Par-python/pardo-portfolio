@@ -16,10 +16,13 @@ type TechStackContent = { items: TechItem[] };
 
 const FALLBACK: TechStackContent = { items: [
   { label: "react", src: "/assets/tech/react.svg" },
+  { label: "nextjs", src: "/assets/tech/nextjs.svg" },
   { label: "tailwind", src: "/assets/tech/tailwind.svg" },
   { label: "typescript", src: "/assets/tech/typescript.svg" },
   { label: "postgresql", src: "/assets/tech/postgresql.svg" },
   { label: "python", src: "/assets/tech/python.svg" },
+  { label: "pandas", src: "/assets/tech/pandas.svg" },
+  { label: "scikit-learn", src: "/assets/tech/scikitlearn.svg" },
   { label: "cloudflare", src: "/assets/tech/cloudflare.svg" },
   { label: "git", src: "/assets/tech/git.svg" },
   { label: "gcloud", src: "/assets/tech/gcloud.svg" },

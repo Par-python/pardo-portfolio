@@ -45,7 +45,19 @@
       "Bash(node -e *)",
       "Bash(git -C /Users/jjpardo/Documents/pardo-portfolio status --porcelain=v1)",
       "Bash(git -C /Users/jjpardo/Documents/pardo-portfolio log --oneline -5)",
-      "Bash(git -C /Users/jjpardo/Documents/pardo-portfolio status)"
+      "Bash(git -C /Users/jjpardo/Documents/pardo-portfolio status)",
+      "Bash(npx eslint *)",
+      "Bash(echo \"=== tsc exit: $? ===\")",
+      "Bash(echo \"---TSC EXIT: $?---\")",
+      "Bash(echo \"---ESLINT EXIT: $?---\")",
+      "Bash(python3 -c ' *)",
+      "Bash(npx next *)",
+      "Bash(echo \"dev server starting \\(pid $!\\)\")",
+      "Bash(command -v shot-scraper)",
+      "Bash(shot-scraper http://localhost:3000/projects -o __TRACKED_VAR__/projects.png --wait 2500 --width 1280)",
+      "Bash(npx --no-install playwright --version)",
+      "Bash(kill 68920)",
+      "Bash(pkill -f \"next dev\")"
     ]
   }
 }

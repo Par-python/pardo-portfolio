@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLiveContent } from "@/lib/useLiveContent";
-import { renderRichText } from "@/lib/richText";
 import { ContactsModal } from "@/components/ContactsModal";
+import { ProjectCard } from "@/components/ProjectCard";
 import { ProjectContextMenu } from "@/components/ProjectContextMenu";
 import { ProjectDetailModal } from "@/components/ProjectDetailModal";
 import { ProjectPropertiesDialog } from "@/components/ProjectPropertiesDialog";
-import { WindowFrame } from "@/components/WindowFrame";
+import { SystemPropertiesDialog } from "@/components/SystemPropertiesDialog";
 
 type Project = {
   title: string;
@@ -93,6 +93,13 @@ export default function ProjectsPage() {
   );
   const [propsIdx, setPropsIdx] = useState<number | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [desktopMenu, setDesktopMenu] = useState<{ x: number; y: number } | null>(
+    null
+  );
+  const [sysPropsOpen, setSysPropsOpen] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [replayKey, setReplayKey] = useState(0);
+  const refreshTimer = useRef<number | null>(null);
   const longPressRef = useRef<{ timer: number; fired: boolean } | null>(null);
   const activeProject = activeIdx !== null ? projects[activeIdx] ?? null : null;
   const propsProject = propsIdx !== null ? projects[propsIdx] ?? null : null;
@@ -132,6 +139,30 @@ export default function ProjectsPage() {
     window.setTimeout(() => setToast(null), 1800);
   };
 
+  const handleDesktopContextMenu = (e: React.MouseEvent) => {
+    // Cards handle their own right-click menu; only empty space opens this one.
+    if ((e.target as HTMLElement).closest("[data-project-card]")) return;
+    e.preventDefault();
+    setDesktopMenu({ x: e.clientX, y: e.clientY });
+  };
+
+  const doRefresh = () => {
+    setDesktopMenu(null);
+    if (refreshTimer.current !== null) window.clearTimeout(refreshTimer.current);
+    setRefreshing(true);
+    refreshTimer.current = window.setTimeout(() => {
+      setRefreshing(false);
+      setReplayKey((k) => k + 1);
+      refreshTimer.current = null;
+    }, 600);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (refreshTimer.current !== null) window.clearTimeout(refreshTimer.current);
+    };
+  }, []);
+
   const navLinks: {
     label: string;
     href?: string;
@@ -142,7 +173,10 @@ export default function ProjectsPage() {
     { label: "CONTACTS", onClick: () => setContactsOpen(true) },
   ];
   return (
-    <main className="min-h-screen w-full bg-white flex flex-col">
+    <main
+      className="min-h-screen w-full bg-white flex flex-col"
+      onContextMenu={handleDesktopContextMenu}
+    >
       {/* Navbar */}
       <div className="anim-navbar mx-auto w-full max-w-[1300px] px-3 sm:px-6 pt-3 sm:pt-4 shrink-0">
         <div className="relative h-[48px] sm:h-[64px] w-full bg-[#c0c0c0] win-frame-outside">
@@ -197,67 +231,40 @@ export default function ProjectsPage() {
         </p>
       </section>
 
-      {/* Projects grid */}
+      {/* Projects grid: first project is featured (spans wide), rest fill the grid */}
       <section className="mx-auto w-full max-w-[1300px] px-3 sm:px-6 pt-6 sm:pt-10">
-        <ul className="anim-proj-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {projects.map((project, idx) => (
-            <li key={`${project.title}-${idx}`}>
-              <button
-                type="button"
-                onClick={() => {
-                  if (longPressRef.current?.fired) {
-                    longPressRef.current.fired = false;
-                    return;
-                  }
-                  setActiveIdx(idx);
-                }}
-                onContextMenu={handleContextMenu(idx)}
-                onTouchStart={handleTouchStart(idx)}
-                onTouchEnd={cancelLongPress}
-                onTouchMove={cancelLongPress}
-                onTouchCancel={cancelLongPress}
-                className="block w-full text-left cursor-pointer hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#000080]"
-                aria-label={`Open ${project.title} details`}
+        <ul
+          key={replayKey}
+          className="anim-proj-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+        >
+          {projects.map((project, idx) => {
+            const featured = idx === 0;
+            return (
+              <li
+                key={`${project.title}-${idx}`}
+                className={featured ? "sm:col-span-2 lg:col-span-3" : ""}
               >
-              <WindowFrame
-                title={project.title}
-                statusText="8 object(s)"
-                className="min-h-[320px] sm:h-[320px] lg:h-[360px]"
-              >
-                <div className="flex flex-col gap-3 sm:gap-4 h-full min-h-0">
-                  <div className="w-full h-[110px] sm:h-[130px] lg:h-[150px] border border-black/20 overflow-hidden bg-[#f4f4f4] shrink-0">
-                    {project.image ? (
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : null}
-                  </div>
-                  <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px] line-clamp-3 sm:line-clamp-none sm:flex-1 sm:min-h-0 sm:overflow-y-auto">
-                    {renderRichText(project.description)}
-                  </p>
-                  {project.tech && project.tech.length > 0 ? (
-                    <ul className="flex flex-wrap gap-2 sm:gap-3 items-center shrink-0">
-                      {project.tech.map((key) =>
-                        TECH_ICONS[key] ? (
-                          <li key={key}>
-                            <img
-                              src={TECH_ICONS[key]}
-                              alt={key}
-                              title={key}
-                              className="size-[20px] sm:size-[24px] object-contain"
-                            />
-                          </li>
-                        ) : null
-                      )}
-                    </ul>
-                  ) : null}
-                </div>
-              </WindowFrame>
-              </button>
-            </li>
-          ))}
+                <ProjectCard
+                  project={project}
+                  idx={idx}
+                  techIcons={TECH_ICONS}
+                  featured={featured}
+                  onOpen={(i) => {
+                    if (longPressRef.current?.fired) {
+                      longPressRef.current.fired = false;
+                      return;
+                    }
+                    setActiveIdx(i);
+                  }}
+                  onContextMenu={handleContextMenu}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={cancelLongPress}
+                  onTouchMove={cancelLongPress}
+                  onTouchCancel={cancelLongPress}
+                />
+              </li>
+            );
+          })}
         </ul>
       </section>
 
@@ -341,6 +348,32 @@ export default function ProjectsPage() {
           more projects to come!
         </p>
       </section>
+
+      {desktopMenu ? (
+        <ProjectContextMenu
+          x={desktopMenu.x}
+          y={desktopMenu.y}
+          onClose={() => setDesktopMenu(null)}
+          items={[
+            { label: "Refresh", onClick: doRefresh },
+            { label: "Properties", onClick: () => setSysPropsOpen(true) },
+          ]}
+        />
+      ) : null}
+
+      <SystemPropertiesDialog
+        open={sysPropsOpen}
+        onClose={() => setSysPropsOpen(false)}
+      />
+
+      {refreshing ? (
+        <div
+          aria-hidden
+          className="fixed inset-0 z-[150] flex items-center justify-center bg-white/40"
+        >
+          <img src="/assets/loading.gif" alt="" className="size-[64px]" />
+        </div>
+      ) : null}
     </main>
   );
 }

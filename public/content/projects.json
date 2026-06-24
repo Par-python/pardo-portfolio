@@ -1,6 +1,19 @@
 {
   "projects": [
     {
+      "title": "Entroscope",
+      "image": "/assets/projects/entroscope-org.png",
+      "description": "The definitive entropy toolkit for time series data — seven entropy measures behind one consistent interface that works directly on pandas Series and numpy arrays.",
+      "details": "**The problem.** While building NextOnMenu I noticed something: when a food's regional search interest started trending, the Shannon entropy of that signal would quietly fall *before* it went mainstream. Falling entropy meant the noise was becoming structure. It was a genuinely useful early signal — but every time I wanted it, I rewrote the same histogram-and-log boilerplate by hand. And Shannon is only one of a dozen entropy measures; the moment I wanted permutation or spectral entropy, I was back to copying formulas off papers and second-guessing the math.\n\n**How it started.** I pulled that scattered code out of NextOnMenu and decided to write it once, properly. The goal was a library where every entropy measure you'd ever reach for lives behind the same tiny interface — `compute`, `rolling`, `delta`, `normalized`, `plot` — so switching from Shannon to permutation to spectral entropy is a one-word change, not a rewrite. It had to take a pandas Series and hand you back a Series with its index intact, or take a numpy array and hand back an array. No ceremony, no per-measure quirks.\n\n**The result.** entroscope ships seven entropy measures — Shannon, permutation, sample, approximate, spectral, differential, and multiscale — plus transfer entropy for directional information flow between two signals and KL/JS divergence for distribution drift. Every measure has rolling and delta variants and built-in matplotlib plotting, and there's a visualization module to overlay measures, render a full dashboard, or flag sharp entropy drops for regime-change detection. The correctness of the hard cases is validated against closed-form analytic baselines, not just eyeballed. It's tested across Python 3.9 through 3.14 with a 90% coverage gate and published to PyPI, so `pip install entroscope` gets anyone the one-liner I wished I'd had.",
+      "tech": [
+        "python",
+        "git"
+      ],
+      "link": "https://github.com/Par-python/entroscope",
+      "createdAt": "May 2026",
+      "team": []
+    },
+    {
       "title": "S1napse",
       "image": "/assets/projects/s1napse.png",
       "description": "Built to see my own ACC laps, S1napse grew into a full sim + real-racing telemetry suite — self-building track maps, per-corner coaching, and an ELM327 bridge that brings the same tools to a real car.",
@@ -23,19 +36,6 @@
       ],
       "link": "https://github.com/Par-python/bigfiles",
       "createdAt": "May 11",
-      "team": []
-    },
-    {
-      "title": "Entroscope",
-      "image": "/assets/projects/entroscope-org.png",
-      "description": "The definitive entropy toolkit for time series data — seven entropy measures behind one consistent interface that works directly on pandas Series and numpy arrays.",
-      "details": "**The problem.** While building NextOnMenu I noticed something: when a food's regional search interest started trending, the Shannon entropy of that signal would quietly fall *before* it went mainstream. Falling entropy meant the noise was becoming structure. It was a genuinely useful early signal — but every time I wanted it, I rewrote the same histogram-and-log boilerplate by hand. And Shannon is only one of a dozen entropy measures; the moment I wanted permutation or spectral entropy, I was back to copying formulas off papers and second-guessing the math.\n\n**How it started.** I pulled that scattered code out of NextOnMenu and decided to write it once, properly. The goal was a library where every entropy measure you'd ever reach for lives behind the same tiny interface — `compute`, `rolling`, `delta`, `normalized`, `plot` — so switching from Shannon to permutation to spectral entropy is a one-word change, not a rewrite. It had to take a pandas Series and hand you back a Series with its index intact, or take a numpy array and hand back an array. No ceremony, no per-measure quirks.\n\n**The result.** entroscope ships seven entropy measures — Shannon, permutation, sample, approximate, spectral, differential, and multiscale — plus transfer entropy for directional information flow between two signals and KL/JS divergence for distribution drift. Every measure has rolling and delta variants and built-in matplotlib plotting, and there's a visualization module to overlay measures, render a full dashboard, or flag sharp entropy drops for regime-change detection. The correctness of the hard cases is validated against closed-form analytic baselines, not just eyeballed. It's tested across Python 3.9 through 3.14 with a 90% coverage gate and published to PyPI, so `pip install entroscope` gets anyone the one-liner I wished I'd had.",
-      "tech": [
-        "python",
-        "git"
-      ],
-      "link": "https://github.com/Par-python/entroscope",
-      "createdAt": "May 2026",
       "team": []
     },
     {
