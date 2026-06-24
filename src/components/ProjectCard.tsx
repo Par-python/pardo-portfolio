@@ -35,6 +35,12 @@ export function accentForProject(project: Project): string {
   return ACCENTS[hash % ACCENTS.length];
 }
 
+// Fades the bottom of an overflowing text block into the card background,
+// rather than hard-cutting or showing a scrollbar. The `open →` cue invites
+// reading the rest in the full detail modal.
+const FADE_MASK =
+  "linear-gradient(to bottom, #000 calc(100% - 44px), transparent 100%)";
+
 type ProjectCardProps = {
   project: Project;
   idx: number;
@@ -117,12 +123,7 @@ export function ProjectCard({
               // (rather than scrolling or cutting).
               <div
                 className="flex-1 min-h-0 overflow-hidden"
-                style={{
-                  WebkitMaskImage:
-                    "linear-gradient(to bottom, #000 calc(100% - 44px), transparent 100%)",
-                  maskImage:
-                    "linear-gradient(to bottom, #000 calc(100% - 44px), transparent 100%)",
-                }}
+                style={{ WebkitMaskImage: FADE_MASK, maskImage: FADE_MASK }}
               >
                 <p className="font-vt323 text-[17px] sm:text-[19px] tracking-[0.32px] leading-[21px] sm:leading-[24px]">
                   {renderRichText(project.description)}
@@ -134,9 +135,16 @@ export function ProjectCard({
                 ) : null}
               </div>
             ) : (
-              <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px] line-clamp-3 sm:line-clamp-none sm:flex-1 sm:min-h-0 sm:overflow-y-auto">
-                {renderRichText(project.description)}
-              </p>
+              // Regular: the short description, fading to the card background on
+              // overflow to match the featured card.
+              <div
+                className="flex-1 min-h-0 overflow-hidden"
+                style={{ WebkitMaskImage: FADE_MASK, maskImage: FADE_MASK }}
+              >
+                <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px]">
+                  {renderRichText(project.description)}
+                </p>
+              </div>
             )}
 
             {/* Tech stack row */}
