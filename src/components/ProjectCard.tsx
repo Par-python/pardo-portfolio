@@ -72,6 +72,7 @@ export function ProjectCard({
   return (
     <button
       type="button"
+      data-project-card
       onClick={() => onOpen(idx)}
       onContextMenu={onContextMenu(idx)}
       onTouchStart={onTouchStart(idx)}
