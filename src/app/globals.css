@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-:root {
+:root,
+[data-theme="win95"] {
   --background: #ffffff;
   --foreground: #000000;
   --navy: #000080;
@@ -9,6 +10,51 @@
   --win-grey-light: #dfdfdf;
   --win-shadow: #7f7f7f;
   --win-link: #3168ff;
+
+  /* semantic theme tokens */
+  --surface: #c0c0c0;
+  --surface-raised: #dfdfdf;
+  --text: #000000;
+  --text-muted: #3f3f3f;
+  --accent: #000080;
+  --accent-text: #ffffff;
+  --link: #3168ff;
+  --border: #808080;
+  --radius: 0px;
+  --page-bg: #ffffff;
+  --backdrop: none;
+  --font-ui: var(--font-pixelify), "Pixelify Sans", monospace;
+  --font-body: var(--font-vt323), monospace;
+  --frame-shadow-outside:
+    inset -1px -1px 0 0 #000,
+    inset 1px 1px 0 0 #fff,
+    inset -2px -2px 0 0 #7f7f7f,
+    inset 2px 2px 0 0 #dfdfdf;
+  --frame-shadow-inside:
+    inset -1px -1px 0 0 #fff,
+    inset 1px 1px 0 0 #808080,
+    inset -2px -2px 0 0 #c1c1c1,
+    inset 2px 2px 0 0 #000;
+}
+
+[data-theme="tahoe"] {
+  --surface: rgba(28, 28, 30, 0.72);
+  --surface-raised: rgba(44, 44, 46, 0.72);
+  --text: #f5f5f7;
+  --text-muted: rgba(235, 235, 245, 0.6);
+  --accent: #0a84ff;
+  --accent-text: #ffffff;
+  --link: #0a84ff;
+  --border: rgba(255, 255, 255, 0.12);
+  --radius: 14px;
+  --page-bg: #1c1c1e;
+  --backdrop: blur(20px) saturate(180%);
+  --font-ui: -apple-system, "SF Pro Text", system-ui, sans-serif;
+  --font-body: -apple-system, "SF Pro Text", system-ui, sans-serif;
+  --frame-shadow-outside:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.1);
+  --frame-shadow-inside: inset 0 0 0 0.5px rgba(255, 255, 255, 0.06);
 }
 
 @theme inline {
@@ -24,25 +70,25 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-pixelify), "Pixelify Sans", monospace;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
 .win-frame-outside {
-  box-shadow:
-    inset -1px -1px 0 0 #000,
-    inset 1px 1px 0 0 #fff,
-    inset -2px -2px 0 0 #7f7f7f,
-    inset 2px 2px 0 0 #dfdfdf;
+  box-shadow: var(--frame-shadow-outside);
+  border-radius: var(--radius);
+  backdrop-filter: var(--backdrop);
 }
 
 .win-frame-inside {
-  box-shadow:
-    inset -1px -1px 0 0 #fff,
-    inset 1px 1px 0 0 #808080,
-    inset -2px -2px 0 0 #c1c1c1,
-    inset 2px 2px 0 0 #000;
+  box-shadow: var(--frame-shadow-inside);
+  border-radius: var(--radius);
+}
+
+[data-theme="tahoe"] .win-titlebar {
+  background: var(--accent) !important;
 }
 
 /* Pixel/8-bit entrance animations (stepped for blocky feel) */
@@ -162,4 +208,13 @@ body {
 
 .anim-proj-footer {
   animation: pixel-in-up 0.6s steps(8, end) 1.6s both;
+}
+
+/* Tahoe swaps the chunky stepped entrance for smooth easing */
+[data-theme="tahoe"] .anim-proj-heading,
+[data-theme="tahoe"] .anim-proj-intro,
+[data-theme="tahoe"] .anim-proj-grid > *,
+[data-theme="tahoe"] .anim-proj-footer,
+[data-theme="tahoe"] .anim-navbar {
+  animation-timing-function: ease-out !important;
 }
