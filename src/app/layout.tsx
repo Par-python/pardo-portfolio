@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Pixelify_Sans, VT323 } from "next/font/google";
 import { TipsShell } from "@/components/TipsShell";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import "./globals.css";
 
 const pixelifySans = Pixelify_Sans({
@@ -31,10 +32,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${pixelifySans.variable} ${vt323.variable} h-full antialiased`}>
-      <body className="min-h-full font-pixelify bg-white text-black">
-        {children}
-        <TipsShell />
+    <html
+      lang="en"
+      data-theme="win95"
+      className={`${pixelifySans.variable} ${vt323.variable} h-full antialiased`}
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('theme');document.documentElement.dataset.theme=t==='tahoe'?'tahoe':'win95';}catch(e){}})();",
+          }}
+        />
+      </head>
+      <body className="min-h-full">
+        <ThemeProvider>
+          {children}
+          <TipsShell />
+        </ThemeProvider>
       </body>
     </html>
   );
