@@ -41,7 +41,7 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){try{var t=localStorage.getItem('theme');document.documentElement.dataset.theme=t==='tahoe'?'tahoe':'win95';}catch(e){}})();",
+              "(function(){try{var t=localStorage.getItem('theme');document.documentElement.dataset.theme=t==='dark'?'dark':'win95';}catch(e){}})();",
           }}
         />
       </head>

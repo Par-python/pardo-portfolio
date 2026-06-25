@@ -37,24 +37,34 @@
     inset 2px 2px 0 0 #000;
 }
 
-[data-theme="tahoe"] {
-  --surface: rgba(28, 28, 30, 0.72);
-  --surface-raised: rgba(44, 44, 46, 0.72);
-  --text: #f5f5f7;
-  --text-muted: rgba(235, 235, 245, 0.6);
-  --accent: #0a84ff;
+/* 90's dark mode: same chunky Windows chrome (bevels, square corners, pixel
+   fonts) — just a dark-grey palette with light text and a near-black desktop. */
+[data-theme="dark"] {
+  --surface: #3a3a3a;
+  --surface-raised: #4a4a4a;
+  --text: #e8e8e8;
+  --text-muted: #a0a0a0;
+  --accent: #2a2a8c;
   --accent-text: #ffffff;
-  --link: #0a84ff;
-  --border: rgba(255, 255, 255, 0.12);
-  --radius: 14px;
-  --page-bg: #1c1c1e;
-  --backdrop: blur(20px) saturate(180%);
-  --font-ui: -apple-system, "SF Pro Text", system-ui, sans-serif;
-  --font-body: -apple-system, "SF Pro Text", system-ui, sans-serif;
+  --link: #6f9bff;
+  --border: #1f1f1f;
+  --radius: 0px;
+  --page-bg: #1a1a1a;
+  --backdrop: none;
+  --font-ui: var(--font-pixelify), "Pixelify Sans", monospace;
+  --font-body: var(--font-vt323), monospace;
+  /* Bevels rebuilt for dark chrome: bright top-left highlight, deep
+     bottom-right shadow — the same 3D effect, darker palette. */
   --frame-shadow-outside:
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 0 0 0.5px rgba(255, 255, 255, 0.1);
-  --frame-shadow-inside: inset 0 0 0 0.5px rgba(255, 255, 255, 0.06);
+    inset -1px -1px 0 0 #000,
+    inset 1px 1px 0 0 #6a6a6a,
+    inset -2px -2px 0 0 #1a1a1a,
+    inset 2px 2px 0 0 #565656;
+  --frame-shadow-inside:
+    inset -1px -1px 0 0 #565656,
+    inset 1px 1px 0 0 #1a1a1a,
+    inset -2px -2px 0 0 #4a4a4a,
+    inset 2px 2px 0 0 #000;
 }
 
 @theme inline {
@@ -85,10 +95,6 @@ body {
 .win-frame-inside {
   box-shadow: var(--frame-shadow-inside);
   border-radius: var(--radius);
-}
-
-[data-theme="tahoe"] .win-titlebar {
-  background: var(--accent) !important;
 }
 
 /* Pixel/8-bit entrance animations (stepped for blocky feel) */
@@ -208,13 +214,4 @@ body {
 
 .anim-proj-footer {
   animation: pixel-in-up 0.6s steps(8, end) 1.6s both;
-}
-
-/* Tahoe swaps the chunky stepped entrance for smooth easing */
-[data-theme="tahoe"] .anim-proj-heading,
-[data-theme="tahoe"] .anim-proj-intro,
-[data-theme="tahoe"] .anim-proj-grid > *,
-[data-theme="tahoe"] .anim-proj-footer,
-[data-theme="tahoe"] .anim-navbar {
-  animation-timing-function: ease-out !important;
 }

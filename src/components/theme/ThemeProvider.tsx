@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useState } from "react";
 
-type Theme = "win95" | "tahoe";
+type Theme = "win95" | "dark";
 
 type ThemeContextValue = {
   theme: Theme;
@@ -15,7 +15,7 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 function readStoredTheme(): Theme {
   if (typeof window === "undefined") return "win95";
   const stored = window.localStorage.getItem("theme");
-  return stored === "tahoe" ? "tahoe" : "win95";
+  return stored === "dark" ? "dark" : "win95";
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
@@ -33,7 +33,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const toggle = useCallback(() => {
-    setTheme(theme === "win95" ? "tahoe" : "win95");
+    setTheme(theme === "win95" ? "dark" : "win95");
   }, [theme, setTheme]);
 
   return (
