@@ -114,10 +114,10 @@ export function ProjectPropertiesDialog({ project, onClose }: Props) {
                   key={row.label}
                   className="flex flex-col sm:flex-row sm:gap-3"
                 >
-                  <span className="shrink-0 w-[96px] font-vt323 font-bold text-[16px] sm:text-[18px] tracking-[0.32px] leading-[20px]">
+                  <span className="shrink-0 w-[96px] font-[family-name:var(--font-body)] font-bold text-[16px] sm:text-[18px] tracking-[0.32px] leading-[20px]">
                     {row.label}:
                   </span>
-                  <span className="flex-1 font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[20px] break-words">
+                  <span className="flex-1 font-[family-name:var(--font-body)] text-[16px] sm:text-[18px] tracking-[0.32px] leading-[20px] break-words">
                     {row.value}
                   </span>
                 </li>
@@ -127,7 +127,7 @@ export function ProjectPropertiesDialog({ project, onClose }: Props) {
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-1 bg-[#c0c0c0] win-frame-outside text-[14px] tracking-[0.28px] cursor-pointer"
+                className="px-4 py-1 bg-[var(--surface)] win-frame-outside text-[14px] tracking-[0.28px] cursor-pointer"
               >
                 ok
               </button>

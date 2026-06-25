@@ -65,7 +65,7 @@ export function SystemPropertiesDialog({
           >
             <div className="flex items-center gap-3">
               <img src="/assets/folder.png" alt="" className="size-[32px]" />
-              <p className="text-[#000080] text-[24px] sm:text-[28px] tracking-[0.6px] leading-none">
+              <p className="text-[var(--accent)] text-[24px] sm:text-[28px] tracking-[0.6px] leading-none">
                 JJ Pardo OS v2026
               </p>
             </div>
@@ -74,7 +74,7 @@ export function SystemPropertiesDialog({
               className="mt-3 h-[2px] w-full"
               style={{
                 backgroundImage:
-                  "repeating-linear-gradient(to right, #000080 0 8px, transparent 8px 14px)",
+                  "repeating-linear-gradient(to right, var(--accent) 0 8px, transparent 8px 14px)",
               }}
             />
 
@@ -82,10 +82,10 @@ export function SystemPropertiesDialog({
               {SPECS.map((spec) => (
                 <li
                   key={spec.label}
-                  className="flex items-baseline justify-between gap-4 font-vt323 text-[16px] sm:text-[18px] tracking-[0.3px] leading-none"
+                  className="flex items-baseline justify-between gap-4 font-[family-name:var(--font-body)] text-[16px] sm:text-[18px] tracking-[0.3px] leading-none"
                 >
-                  <span className="text-black/60">{spec.label}:</span>
-                  <span className="text-black text-right">{spec.value}</span>
+                  <span className="text-[var(--text-muted)]">{spec.label}:</span>
+                  <span className="text-[var(--text)] text-right">{spec.value}</span>
                 </li>
               ))}
             </ul>
@@ -94,7 +94,7 @@ export function SystemPropertiesDialog({
               <button
                 type="button"
                 onClick={onClose}
-                className="bg-[#c0c0c0] win-frame-outside px-6 py-1 font-vt323 text-[16px] tracking-[0.3px] leading-none cursor-pointer active:translate-y-[1px]"
+                className="bg-[var(--surface)] win-frame-outside px-6 py-1 font-[family-name:var(--font-body)] text-[16px] tracking-[0.3px] leading-none cursor-pointer active:translate-y-[1px]"
               >
                 OK
               </button>

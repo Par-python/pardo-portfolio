@@ -65,7 +65,7 @@ export function ProjectDetailModal({
             className="cursor-default h-full overflow-y-auto"
             onMouseDown={(e) => e.stopPropagation()}
           >
-            <p className="text-[#000080] text-[28px] sm:text-[40px] tracking-[0.8px] leading-none">
+            <p className="text-[var(--accent)] text-[28px] sm:text-[40px] tracking-[0.8px] leading-none">
               {project.title}
             </p>
 
@@ -73,12 +73,12 @@ export function ProjectDetailModal({
               className="mt-2 sm:mt-3 h-[2px] w-full"
               style={{
                 backgroundImage:
-                  "repeating-linear-gradient(to right, #000080 0 8px, transparent 8px 14px)",
+                  "repeating-linear-gradient(to right, var(--accent) 0 8px, transparent 8px 14px)",
               }}
             />
 
             {project.image ? (
-              <div className="mt-4 w-full aspect-[16/9] border border-black/20 overflow-hidden bg-[#f4f4f4] flex items-center justify-center">
+              <div className="mt-4 w-full aspect-[16/9] border border-[var(--border)] overflow-hidden bg-[var(--surface-raised)] flex items-center justify-center">
                 <img
                   src={project.image}
                   alt={project.title}
@@ -87,12 +87,12 @@ export function ProjectDetailModal({
               </div>
             ) : null}
 
-            <p className="mt-4 font-vt323 text-[18px] sm:text-[22px] tracking-[0.4px] leading-[22px] sm:leading-[26px]">
+            <p className="mt-4 font-[family-name:var(--font-body)] text-[18px] sm:text-[22px] tracking-[0.4px] leading-[22px] sm:leading-[26px]">
               {renderRichText(project.description)}
             </p>
 
             {project.details ? (
-              <p className="mt-3 font-vt323 text-[16px] sm:text-[20px] tracking-[0.4px] leading-[20px] sm:leading-[24px] whitespace-pre-line">
+              <p className="mt-3 font-[family-name:var(--font-body)] text-[16px] sm:text-[20px] tracking-[0.4px] leading-[20px] sm:leading-[24px] whitespace-pre-line">
                 {renderRichText(project.details)}
               </p>
             ) : null}
@@ -102,7 +102,7 @@ export function ProjectDetailModal({
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block font-vt323 text-[#000080] text-[16px] sm:text-[20px] tracking-[0.32px] underline leading-none"
+                className="mt-4 inline-block font-[family-name:var(--font-body)] text-[var(--link)] text-[16px] sm:text-[20px] tracking-[0.32px] underline leading-none"
               >
                 visit project →
               </a>
@@ -110,7 +110,7 @@ export function ProjectDetailModal({
 
             {project.tech && project.tech.length > 0 ? (
               <div className="mt-5">
-                <p className="font-vt323 font-bold text-[16px] sm:text-[20px] tracking-[0.4px]">
+                <p className="font-[family-name:var(--font-body)] font-bold text-[16px] sm:text-[20px] tracking-[0.4px]">
                   tech stack:
                 </p>
                 <ul className="mt-2 flex flex-wrap gap-3 items-center">
@@ -125,7 +125,7 @@ export function ProjectDetailModal({
                           alt={key}
                           className="size-[28px] sm:size-[36px] object-contain"
                         />
-                        <span className="font-vt323 text-[12px] sm:text-[14px] tracking-[0.28px] leading-none">
+                        <span className="font-[family-name:var(--font-body)] text-[12px] sm:text-[14px] tracking-[0.28px] leading-none">
                           {key}
                         </span>
                       </li>
