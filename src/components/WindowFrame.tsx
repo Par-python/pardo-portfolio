@@ -15,8 +15,8 @@ export function WindowFrame({
   className = "",
   children,
   statusText,
-  titleBarColor = "#000080",
-  bodyColor = "#ffffff",
+  titleBarColor = "var(--accent)",
+  bodyColor = "var(--card)",
   onClose,
 }: WindowFrameProps) {
   return (
