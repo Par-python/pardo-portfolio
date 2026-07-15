@@ -386,10 +386,35 @@ export default function Home() {
           {/* Description + socials */}
           <div className="mt-1 md:-mt-2 shrink-0">
             <p className="anim-description font-vt323 text-[16px] sm:text-[20px] tracking-[0.48px]">
+              R&amp;D Data Scientist @{" "}
+              <a
+                href="https://www.quartzlabs.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#3168ff] hover:underline"
+              >
+                Quartz Labs
+              </a>{" "}
+              | SWE Intern @{" "}
+              <a
+                href="https://www.swarm.work/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#3168ff] hover:underline"
+              >
+                Swarm
+              </a>
+            </p>
+            <p className="anim-description font-vt323 text-[16px] sm:text-[20px] tracking-[0.48px]">
               a computer science student at{" "}
-              <span className="text-[#3168ff]">
+              <a
+                href="https://www.ateneo.edu/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#3168ff] hover:underline"
+              >
                 Ateneo De Manila University
-              </span>
+              </a>
             </p>
             <div className="anim-socials mt-2 flex gap-3 sm:gap-4 items-center">
               <a

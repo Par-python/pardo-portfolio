@@ -18,7 +18,8 @@ const vt323 = VT323({
 
 export const metadata: Metadata = {
   title: "JJ Pardo",
-  description: "A computer science student at Ateneo De Manila University",
+  description:
+    "R&D Data Scientist @ Quartz Labs | SWE Intern @ Swarm | A computer science student at Ateneo De Manila University",
   icons: {
     icon: "/assets/j-pard-folio-favicon.png",
     shortcut: "/assets/j-pard-folio-favicon.png",
