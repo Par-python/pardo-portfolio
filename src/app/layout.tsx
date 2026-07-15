@@ -38,14 +38,6 @@ export default function RootLayout({
       data-theme="win95"
       className={`${pixelifySans.variable} ${vt323.variable} h-full antialiased`}
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "(function(){try{var t=localStorage.getItem('theme');document.documentElement.dataset.theme=t==='dark'?'dark':'win95';}catch(e){}})();",
-          }}
-        />
-      </head>
       <body className="min-h-full">
         <ThemeProvider>
           {children}

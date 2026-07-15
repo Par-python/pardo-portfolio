@@ -9,7 +9,6 @@ import { ProjectContextMenu } from "@/components/ProjectContextMenu";
 import { ProjectDetailModal } from "@/components/ProjectDetailModal";
 import { ProjectPropertiesDialog } from "@/components/ProjectPropertiesDialog";
 import { SystemPropertiesDialog } from "@/components/SystemPropertiesDialog";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 type Project = {
   title: string;
@@ -175,7 +174,7 @@ export default function ProjectsPage() {
   ];
   return (
     <main
-      className="min-h-screen w-full bg-white flex flex-col"
+      className="min-h-screen w-full bg-[var(--page-bg)] flex flex-col"
       onContextMenu={handleDesktopContextMenu}
     >
       {/* Navbar */}
@@ -217,7 +216,6 @@ export default function ProjectsPage() {
                   </button>
                 )
               )}
-              <ThemeToggle />
             </nav>
           </div>
         </div>

@@ -13,15 +13,13 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function readStoredTheme(): Theme {
-  if (typeof window === "undefined") return "win95";
-  const stored = window.localStorage.getItem("theme");
-  return stored === "dark" ? "dark" : "win95";
+  // Dark mode is disabled for now: always start in win95 (light) so the server
+  // and client render identically (no hydration mismatch). Re-enable dark by
+  // restoring the localStorage read here and the no-flash script in layout.tsx.
+  return "win95";
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Lazy initializer reads localStorage once on client mount; SSR returns "win95".
-  // The inline no-flash script already set the attribute pre-paint; this aligns
-  // React state with it without needing a post-mount setState effect.
   const [theme, setThemeState] = useState<Theme>(readStoredTheme);
 
   const setTheme = useCallback((t: Theme) => {
