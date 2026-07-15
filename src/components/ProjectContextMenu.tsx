@@ -49,7 +49,7 @@ export function ProjectContextMenu({
   return (
     <div
       ref={ref}
-      className="fixed z-[200] bg-[#c0c0c0] win-frame-outside py-1"
+      className="fixed z-[200] bg-[var(--surface)] win-frame-outside py-1"
       style={{ left: safeX, top: safeY, width }}
       onContextMenu={(e) => e.preventDefault()}
     >
@@ -66,8 +66,8 @@ export function ProjectContextMenu({
               }}
               className={`w-full text-left px-3 py-1 text-[14px] tracking-[0.28px] leading-none ${
                 item.disabled
-                  ? "text-[#7f7f7f] cursor-not-allowed"
-                  : "text-black hover:bg-[#000080] hover:text-white cursor-pointer"
+                  ? "text-[var(--text-muted)] cursor-not-allowed"
+                  : "text-[var(--text)] hover:bg-[var(--accent)] hover:text-[var(--accent-text)] cursor-pointer"
               }`}
             >
               {item.label}

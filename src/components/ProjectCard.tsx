@@ -80,7 +80,7 @@ export function ProjectCard({
       onTouchMove={onTouchMove}
       onTouchCancel={onTouchCancel}
       aria-label={`Open ${project.title} details`}
-      className="group block w-full h-full text-left cursor-pointer transition-transform duration-100 hover:-translate-y-[3px] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#000080]"
+      className="group block w-full h-full text-left cursor-pointer transition-transform duration-100 hover:-translate-y-[3px] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)]"
     >
       <WindowFrame
         title={project.title}
@@ -103,8 +103,8 @@ export function ProjectCard({
           <div
             className={
               featured
-                ? "w-full md:w-[52%] h-[160px] md:h-auto border border-black/20 overflow-hidden bg-[#f4f4f4] shrink-0"
-                : "w-full h-[110px] sm:h-[130px] lg:h-[150px] border border-black/20 overflow-hidden bg-[#f4f4f4] shrink-0"
+                ? "w-full md:w-[52%] h-[160px] md:h-auto border border-[var(--border)] overflow-hidden bg-[var(--surface-raised)] shrink-0"
+                : "w-full h-[110px] sm:h-[130px] lg:h-[150px] border border-[var(--border)] overflow-hidden bg-[var(--surface-raised)] shrink-0"
             }
           >
             {project.image ? (
@@ -126,11 +126,11 @@ export function ProjectCard({
                 className="flex-1 min-h-0 overflow-hidden"
                 style={{ WebkitMaskImage: FADE_MASK, maskImage: FADE_MASK }}
               >
-                <p className="font-vt323 text-[17px] sm:text-[19px] tracking-[0.32px] leading-[21px] sm:leading-[24px]">
+                <p className="font-[family-name:var(--font-body)] text-[17px] sm:text-[19px] tracking-[0.32px] leading-[21px] sm:leading-[24px]">
                   {renderRichText(project.description)}
                 </p>
                 {project.details ? (
-                  <p className="mt-3 font-vt323 text-[15px] sm:text-[17px] tracking-[0.32px] leading-[19px] sm:leading-[22px] text-black/80 whitespace-pre-line">
+                  <p className="mt-3 font-[family-name:var(--font-body)] text-[15px] sm:text-[17px] tracking-[0.32px] leading-[19px] sm:leading-[22px] text-[var(--text-muted)] whitespace-pre-line">
                     {renderRichText(project.details)}
                   </p>
                 ) : null}
@@ -142,7 +142,7 @@ export function ProjectCard({
                 className="flex-1 min-h-0 overflow-hidden"
                 style={{ WebkitMaskImage: FADE_MASK, maskImage: FADE_MASK }}
               >
-                <p className="font-vt323 text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px]">
+                <p className="font-[family-name:var(--font-body)] text-[16px] sm:text-[18px] tracking-[0.32px] leading-[18px] sm:leading-[20px]">
                   {renderRichText(project.description)}
                 </p>
               </div>
@@ -151,10 +151,10 @@ export function ProjectCard({
             {/* Tech stack row */}
             {tech.length > 0 ? (
               <div className="flex items-center gap-2 shrink-0">
-                <span className="font-vt323 text-[12px] sm:text-[13px] tracking-[0.26px] text-black/55 leading-none shrink-0">
+                <span className="font-[family-name:var(--font-body)] text-[12px] sm:text-[13px] tracking-[0.26px] text-[var(--text-muted)] leading-none shrink-0">
                   built with
                 </span>
-                <span className="h-px flex-1 bg-black/15" />
+                <span className="h-px flex-1 bg-[var(--border)]" />
                 <ul className="flex flex-wrap gap-2 sm:gap-2.5 items-center justify-end">
                   {tech.map((key) => (
                     <li key={key}>
@@ -172,8 +172,7 @@ export function ProjectCard({
 
             {/* Open cue */}
             <span
-              className="font-vt323 text-[14px] sm:text-[16px] tracking-[0.3px] underline leading-none shrink-0 opacity-70 transition-opacity group-hover:opacity-100"
-              style={{ color: accent }}
+              className="font-[family-name:var(--font-body)] text-[14px] sm:text-[16px] tracking-[0.3px] underline leading-none shrink-0 opacity-70 transition-opacity group-hover:opacity-100 text-[var(--accent)]"
             >
               open →
             </span>

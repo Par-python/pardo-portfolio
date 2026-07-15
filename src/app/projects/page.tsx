@@ -174,13 +174,13 @@ export default function ProjectsPage() {
   ];
   return (
     <main
-      className="min-h-screen w-full bg-white flex flex-col"
+      className="min-h-screen w-full bg-[var(--page-bg)] flex flex-col"
       onContextMenu={handleDesktopContextMenu}
     >
       {/* Navbar */}
       <div className="anim-navbar mx-auto w-full max-w-[1300px] px-3 sm:px-6 pt-3 sm:pt-4 shrink-0">
-        <div className="relative h-[48px] sm:h-[64px] w-full bg-[#c0c0c0] win-frame-outside">
-          <div className="absolute inset-[6px] bg-[#000080] flex items-center px-3 sm:px-4 gap-3">
+        <div className="relative h-[48px] sm:h-[64px] w-full bg-[var(--surface)] win-frame-outside">
+          <div className="absolute inset-[6px] bg-[var(--accent)] flex items-center px-3 sm:px-4 gap-3">
             <Link
               href="/"
               className="flex items-center gap-3 hover:opacity-80 leading-none"
@@ -191,7 +191,7 @@ export default function ProjectsPage() {
                 alt=""
                 className="size-[20px] sm:size-[28px] shrink-0"
               />
-              <span className="text-[#e6e6e6] text-[20px] sm:text-[28px] tracking-[0.72px] leading-none">
+              <span className="text-[var(--accent-text)] text-[20px] sm:text-[28px] tracking-[0.72px] leading-none">
                 JJ
               </span>
             </Link>
@@ -201,7 +201,7 @@ export default function ProjectsPage() {
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap py-2"
+                    className="font-[family-name:var(--font-ui)] text-[var(--accent-text)] text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap py-2"
                   >
                     {link.label}
                   </Link>
@@ -210,7 +210,7 @@ export default function ProjectsPage() {
                     key={link.label}
                     type="button"
                     onClick={link.onClick}
-                    className="font-vt323 text-white text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap cursor-pointer bg-transparent border-0 py-2"
+                    className="font-[family-name:var(--font-ui)] text-[var(--accent-text)] text-[14px] sm:text-[20px] tracking-[0.48px] underline hover:opacity-80 leading-none whitespace-nowrap cursor-pointer bg-transparent border-0 py-2"
                   >
                     {link.label}
                   </button>
@@ -223,10 +223,10 @@ export default function ProjectsPage() {
 
       {/* Heading + intro */}
       <section className="mx-auto w-full max-w-[1300px] px-3 sm:px-6 pt-6 sm:pt-10">
-        <h1 className="anim-proj-heading text-[#000080] text-[clamp(56px,13vw,128px)] tracking-[2.56px] leading-[0.9] whitespace-nowrap">
+        <h1 className="anim-proj-heading text-[var(--accent)] text-[clamp(56px,13vw,128px)] tracking-[2.56px] leading-[0.9] whitespace-nowrap">
           Projects
         </h1>
-        <p className="anim-proj-intro mt-4 sm:mt-6 font-vt323 text-[16px] sm:text-[22px] tracking-[0.4px] leading-[20px] sm:leading-[28px] max-w-[720px]">
+        <p className="anim-proj-intro mt-4 sm:mt-6 font-[family-name:var(--font-body)] text-[16px] sm:text-[22px] tracking-[0.4px] leading-[20px] sm:leading-[28px] max-w-[720px]">
        From AI policy simulators to everyday utilities, these projects reflect my drive to solve real-world problems. Here is a look at how I turn complex data into scalable, user-centric software.
         </p>
       </section>
@@ -318,7 +318,7 @@ export default function ProjectsPage() {
       ) : null}
       {toast ? (
         <div
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[210] bg-[#c0c0c0] win-frame-outside px-4 py-2 text-[14px] tracking-[0.28px]"
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[210] bg-[var(--surface)] win-frame-outside px-4 py-2 text-[14px] tracking-[0.28px]"
           role="status"
         >
           {toast}
@@ -344,7 +344,7 @@ export default function ProjectsPage() {
             }}
           />
         </div>
-        <p className="anim-proj-footer absolute left-1/2 -translate-x-1/2 bottom-8 sm:bottom-14 font-vt323 text-white text-[18px] sm:text-[28px] tracking-[0.48px] whitespace-nowrap">
+        <p className="anim-proj-footer absolute left-1/2 -translate-x-1/2 bottom-8 sm:bottom-14 font-[family-name:var(--font-body)] text-white text-[18px] sm:text-[28px] tracking-[0.48px] whitespace-nowrap">
           more projects to come!
         </p>
       </section>

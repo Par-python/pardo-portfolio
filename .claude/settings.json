@@ -57,7 +57,11 @@
       "Bash(shot-scraper http://localhost:3000/projects -o __TRACKED_VAR__/projects.png --wait 2500 --width 1280)",
       "Bash(npx --no-install playwright --version)",
       "Bash(kill 68920)",
-      "Bash(pkill -f \"next dev\")"
+      "Bash(pkill -f \"next dev\")",
+      "Bash(git -C /Users/jjpardo/Documents/pardo-portfolio add src/components/theme/ThemeProvider.tsx src/app/layout.tsx)",
+      "Bash(git -C /Users/jjpardo/Documents/pardo-portfolio commit -m \"feat: ThemeProvider, useTheme, and no-flash theme script\")",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(git branch *)"
     ]
   }
 }
